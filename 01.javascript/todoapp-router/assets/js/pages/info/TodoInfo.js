@@ -10,8 +10,8 @@ const TodoInfo = async function () {
     page.setAttribute("id", "page");
 
     const content = document.createElement("div");
-    //const text = document.createTextNode(`_id=${_id} 상세 조회 화면`);
-    //content.appendChild(text);
+    const text = document.createTextNode(`_id=${_id} 상세 조회 화면`);
+    content.appendChild(text);
 
     let response;
 

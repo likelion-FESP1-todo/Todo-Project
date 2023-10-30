@@ -4,8 +4,9 @@ import Footer from '../../layout/Footer.js';
 import TodoRegist from '../regist/TodoRegist.js';
 import TodoInfo from '../info/TodoInfo.js';
 import { linkTo } from '../../Router.js';
+import Pagination from './pagination.js';
 
-const TodoList = async function () {
+const TodoList = async function (pageId = 1) {
   const page = document.createElement('div');
   page.setAttribute('id', 'page');
 
@@ -13,14 +14,13 @@ const TodoList = async function () {
   content.setAttribute('id', 'content');
   let response;
   try {
-    response = await axios('http://localhost:33088/api/todolist?page=1');
+    response = await axios(
+      `http://localhost:33088/api/todolist?page=${pageId}&limit=3`,
+    );
 
     const ul = document.createElement('ul');
     ul.setAttribute('class', 'todolist');
     console.log(response);
-
-    // 페이지네이션 추가
-    pagination(response.data?.pagination.totalPages);
 
     response.data?.items.forEach((item) => {
       const li = document.createElement('li');
@@ -130,19 +130,10 @@ const TodoList = async function () {
 
   page.appendChild(Header('TODO App 목록 조회'));
   page.appendChild(content);
+  page.appendChild(Pagination(response.data?.pagination.totalPages));
   page.appendChild(Footer());
+
   return page;
 };
-
-// pagination 함수
-function pagination(totalPages = 1) {
-  const pageBtns = document.createElement('ul');
-  for (let i = 0; i < totalPages; i++) {
-    const pageBtn = document.createElement('li');
-    const pageNum = document.createTextNode(i + 1);
-    // page;
-    pageBtns.appendChild(pageBtn);
-  }
-}
 
 export default TodoList;
