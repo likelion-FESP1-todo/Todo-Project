@@ -12,10 +12,14 @@ const TodoList = async function () {
   content.setAttribute('id', 'content');
   let response;
   try {
-    response = await axios('http://localhost:33088/api/todolist');
+    response = await axios(
+      'http://localhost:33088/api/todolist?page=1&limit=5',
+    );
 
     const ul = document.createElement('ul');
     ul.setAttribute('class', 'todolist');
+    console.log(response);
+
     response.data?.items.forEach((item) => {
       const li = document.createElement('li');
 
