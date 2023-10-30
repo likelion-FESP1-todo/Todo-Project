@@ -60,7 +60,7 @@ const TodoInfo = async function ({ _id } = {}) {
     date2.appendChild(updateDate);
     content.appendChild(date2);
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 
   page.appendChild(Header('TODO App 상세 조회'));
