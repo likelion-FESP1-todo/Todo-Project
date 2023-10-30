@@ -1,7 +1,7 @@
 // 할일 등록
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
-import TodoList from '../../pages/list/TodoList.js';
+import { linkTo } from '../../Router.js';
 
 const TodoRegist = function () {
   const page = document.createElement('div');
@@ -54,10 +54,8 @@ const TodoRegist = function () {
         body,
       );
       const data = response.data;
-      // console.log(data);
-
-      // 값 등록 후 목록 조회 컴포넌트로 변경
-      await loadComponent(TodoList);
+      console.log(data);
+      linkTo('/');
     } catch (err) {
       console.error(err);
     }
@@ -72,13 +70,5 @@ const TodoRegist = function () {
 
   return page;
 };
-
-// 컴포넌트 변경
-async function loadComponent(component) {
-  const appRoot = document.getElementById('app');
-  appRoot.innerHTML = '';
-  const componentElement = await component();
-  appRoot.appendChild(componentElement);
-}
 
 export default TodoRegist;

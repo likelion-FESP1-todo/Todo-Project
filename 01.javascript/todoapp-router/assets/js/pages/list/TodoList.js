@@ -3,6 +3,7 @@ import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import TodoRegist from '../regist/TodoRegist.js';
 import TodoInfo from '../info/TodoInfo.js';
+import { linkTo } from '../../Router.js';
 
 const TodoList = async function () {
   const page = document.createElement('div');
@@ -12,10 +13,15 @@ const TodoList = async function () {
   content.setAttribute('id', 'content');
   let response;
   try {
-    response = await axios('http://localhost:33088/api/todolist');
+    response = await axios('http://localhost:33088/api/todolist?page=1');
 
     const ul = document.createElement('ul');
     ul.setAttribute('class', 'todolist');
+    console.log(response);
+
+    // 페이지네이션 추가
+    pagination(response.data?.pagination.totalPages);
+
     response.data?.items.forEach((item) => {
       const li = document.createElement('li');
 
@@ -92,8 +98,7 @@ const TodoList = async function () {
       // 상세조회 버튼 클릭 시 동작
       todoInfoLink.addEventListener('click', async function (e) {
         e.preventDefault(); // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
-        const infoPage = await TodoInfo({ _id: item._id });
-        document.querySelector('#page').replaceWith(infoPage);
+        linkTo(todoInfoLink.getAttribute('href'));
       });
 
       li.appendChild(completeCheck);
@@ -116,8 +121,7 @@ const TodoList = async function () {
     content.appendChild(btnRegist);
 
     btnRegist.addEventListener('click', () => {
-      const registPage = TodoRegist();
-      document.querySelector('#page').replaceWith(registPage);
+      linkTo('regist');
     });
   } catch (err) {
     const error = document.createTextNode('일시적인 오류 발생');
@@ -129,5 +133,16 @@ const TodoList = async function () {
   page.appendChild(Footer());
   return page;
 };
+
+// pagination 함수
+function pagination(totalPages = 1) {
+  const pageBtns = document.createElement('ul');
+  for (let i = 0; i < totalPages; i++) {
+    const pageBtn = document.createElement('li');
+    const pageNum = document.createTextNode(i + 1);
+    // page;
+    pageBtns.appendChild(pageBtn);
+  }
+}
 
 export default TodoList;
