@@ -1,0 +1,43 @@
+/* regist & update style */
+.Todo-header > *:nth-child(2) {
+  margin-right: 144px;
+}
+
+.Todo-titleInput[type='text']::placeholder {
+  font-size: 30px;
+  font-family: INESeedKR-Bd;
+  color: #666;
+}
+
+.Todo-contentInput::placeholder,
+.Todo-contentInput {
+  font-size: 20px;
+  color: #666;
+}
+
+.Todo-titleInput[type='text'] {
+  border: 0;
+  font-size: 30px;
+  font-family: INESeedKR-Bd;
+  margin: 37px 0 21px 0;
+  border-bottom: 2px solid #6174db;
+}
+
+.Todo-contentInput {
+  background-color: #eceefb;
+  height: 350px;
+  overflow-y: scroll;
+  padding: 25px 25px;
+}
+
+.Todo-button {
+  background-color: #6174db;
+  color: #fff;
+  font-family: INESeedKR-Bd;
+  font-size: 20px;
+  padding: 7px 28px;
+  border-radius: 10px;
+  margin-left: auto;
+  display: block;
+  margin-top: 26px;
+}

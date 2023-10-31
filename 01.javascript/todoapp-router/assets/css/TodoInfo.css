@@ -1,28 +1,17 @@
 .TodoInfo-header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
 }
-.TodoInfo-header > *:nth-child(1) {
-  order: 2;
-  font-size: 28px;
-  font-weight: normal;
-  color: #666;
-}
+
 .TodoInfo-header > *:nth-child(2) {
   order: 3;
 }
+
 .TodoInfo-header > *:nth-child(2) button {
   width: 37px;
   height: 37px;
 }
-.TodoInfo-header > *:nth-child(3) {
-  order: 1;
-  width: 25px;
-  height: 40px;
-}
 
-.TodoInfo-title {
+.Todo-title {
   font-size: 30px;
   margin: 36px 0 21px;
 }
