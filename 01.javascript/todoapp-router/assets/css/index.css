@@ -86,7 +86,10 @@ button {
     "맑은 고딕", dotum, "돋움", sans-serif;
   color: #333;
 }
-
+input[type="text"],
+textarea {
+  font-family: inherit;
+}
 a {
   color: #666666;
   text-decoration: none;

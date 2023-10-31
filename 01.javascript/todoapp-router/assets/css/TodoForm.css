@@ -5,7 +5,7 @@
 
 .Todo-titleInput[type="text"]::placeholder {
   font-size: 30px;
-  font-family: "INESeedKR-Bd", sans-serif;
+  font-weight: bold;
   color: #666;
 }
 
@@ -18,7 +18,7 @@
 .Todo-titleInput[type="text"] {
   border: 0;
   font-size: 30px;
-  font-family: "INESeedKR-Bd", sans-serif;
+  font-weight: bold;
   margin: 37px 0 21px 0;
   border-bottom: 2px solid #6174db;
   padding: 3px 0;
