@@ -2,6 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
+import { BackButton } from '../utils.js';
 
 const TodoUpdate = async function () {
   const page = document.createElement('div');
@@ -32,10 +33,14 @@ const TodoUpdate = async function () {
     const contentText = document.createTextNode(data.content);
     content.appendChild(contentText);
 
-    // button
+    // 뒤로가기 버튼
+    const backBtn = BackButton();
+
+    // 수정하기 버튼
     const updateBtn = document.createElement('button');
     const btnText = document.createTextNode('수정하기');
     updateBtn.appendChild(btnText);
+    updateBtn.className = 'move_datail';
     updateBtn.addEventListener('click', async (e) => {
       const titleVal = title.value;
       const contentVal = content.value;
@@ -60,9 +65,12 @@ const TodoUpdate = async function () {
     page.appendChild(Header('TODO App 수정하기'));
     page.appendChild(title);
     page.appendChild(content);
+    page.appendChild(backBtn);
     page.appendChild(updateBtn);
     page.appendChild(Footer());
-  } catch (error) {}
+  } catch (error) {
+    console.log(err);
+  }
 
   return page;
 };
