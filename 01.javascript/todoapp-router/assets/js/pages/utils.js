@@ -18,4 +18,25 @@ const SendButton = function (text, event) {
   return btn;
 };
 
-export { Button, SendButton };
+const Input = function (title = '') {
+  const inputDiv = document.createElement('div');
+  const input = document.createElement('input');
+  input.setAttribute('type', 'text');
+  input.setAttribute('placeholder', '제목을 입력해주세요.');
+  input.setAttribute('value', title);
+  input.className = 'Todo-titleInput';
+  inputDiv.appendChild(input);
+  return inputDiv;
+};
+
+const Textarea = function (content = '') {
+  const textareaDiv = document.createElement('div');
+  const textarea = document.createElement('textarea');
+  textarea.setAttribute('placeholder', '내용을 적어주세요.');
+  const contentText = document.createTextNode(content);
+  textarea.appendChild(contentText);
+  textarea.className = 'Todo-contentInput';
+  textareaDiv.appendChild(textarea);
+  return textareaDiv;
+};
+export { Button, SendButton, Input, Textarea };

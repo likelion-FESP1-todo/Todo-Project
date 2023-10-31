@@ -2,7 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
-import { Button, SendButton } from '../utils.js';
+import { Button, SendButton, Input, Textarea } from '../utils.js';
 
 const TodoUpdate = async function () {
   const page = document.createElement('div');
@@ -21,7 +21,6 @@ const TodoUpdate = async function () {
 
   //초기 content
   const _id = searchParam('_id');
-  console.log(_id);
 
   //쿼리스트링 값 가져오기
   function searchParam(key) {
@@ -36,27 +35,15 @@ const TodoUpdate = async function () {
     console.log(data);
 
     // title
-    const title = document.createElement('div');
-    const titleInput = document.createElement('input');
-    titleInput.setAttribute('type', 'text');
-    titleInput.setAttribute('placeholder', '제목을 입력해주세요.');
-    titleInput.setAttribute('value', data.title);
-    titleInput.className = 'Todo-titleInput';
-    title.appendChild(titleInput);
+    const title = Input(data.title);
 
     // content
-    const content = document.createElement('div');
-    const contentInput = document.createElement('textarea');
-    contentInput.setAttribute('placeholder', '내용을 적어주세요.');
-    const contentText = document.createTextNode(data.content);
-    contentInput.appendChild(contentText);
-    contentInput.className = 'Todo-contentInput';
-    content.appendChild(contentInput);
+    const content = Textarea(data.content);
 
     // 수정하기 버튼
     const editEvent = async function () {
-      const titleVal = titleInput.value;
-      const contentVal = contentInput.value;
+      const titleVal = title.querySelector('input').value;
+      const contentVal = content.querySelector('textarea').value;
       // 값 체크
       if (!titleVal || !contentVal) {
         alert('제목과 상세내용을 모두 입력해주세요!');
