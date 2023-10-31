@@ -66,14 +66,11 @@ const Content = async (pageNum, limitNum) => {
                 document.getElementById(`id_${Number(pageNum)-1}`).click();
               }
             } else {
-              document.getElementById(`id_${Number(pageNum)}`).click();
-              console.log(AllTasks-1 % Number(limit))
-              // if (AllTasks-1 % Number(limit)) {
-
-              // }
+              document.getElementById(`id_${pageNum}`).click();
             }
 
             ul_tag.removeChild(li_tag);
+
 
             // url: /todolist/{_id}
             // method: DELETE
@@ -83,6 +80,12 @@ const Content = async (pageNum, limitNum) => {
               );
               const data = response.data;
               console.log(data);
+
+              // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
+              if ((AllTasks-1) % Number(limitNum) === 0) {
+                const totalPageNum = document.querySelectorAll('.TodoList-pageBtn').length;
+                document.getElementById(`id_${totalPageNum}`).remove();
+              }
             } catch (err) {
               alert('삭제 실패');
               console.error(err);
