@@ -1,6 +1,7 @@
 // 할일 등록
 import Header from "../../layout/Header.js";
 import Footer from "../../layout/Footer.js";
+import { linkTo } from '../../Router.js';
 
 const TodoInfo = async function () {
     const params = new URLSearchParams(location.search);
@@ -18,7 +19,6 @@ const TodoInfo = async function () {
     try {
         response = await axios(`http://localhost:33088/api/todolist/${_id}`);
         const data = response.data.item;
-        console.log(data);
 
         // 투두 id
         const idNum = document.createElement("span");
@@ -71,9 +71,29 @@ const TodoInfo = async function () {
         content.appendChild(editBtn);
 
         //삭제하기 버튼
-        const deleteBtn = document.createElement("btn");
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = 'button';
+        deleteBtn.setAttribute('type', 'button');
         const deleteText = document.createTextNode("삭제하기");
+        deleteBtn.addEventListener('click', async () => {
+            console.log('1111')
+            if (window.confirm("정말 삭제하시겠습니까?")) {
+                try {
+                    const response = await axios.delete(
+                      `http://localhost:33088/api/todolist/${_id}`,
+                    );
+                    const data = response.data;
+                    alert('삭제 완료');
+                    console.log(data);
+                    linkTo("/");
+                  } catch (err) {
+                    alert('삭제 실패');
+                    console.error(err);
+                }
+            }
+        });
         deleteBtn.appendChild(deleteText);
+
         content.appendChild(deleteBtn);
     } catch (error) {
         console.log(err);
