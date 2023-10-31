@@ -26,6 +26,9 @@ async function getPage() {
 async function render() {
     const page = await getPage();
     document.querySelector("#page").replaceWith(page);
+
+    // 초기 zoom 설정
+    setZoomBasedOnWidth();
 }
 
 window.addEventListener("popstate", render);
@@ -38,5 +41,16 @@ export function linkTo(url) {
 const Router = async function () {
     return await getPage();
 };
+
+// 반응형 줌 설정 (반응형을 적용할 경우에는 아래의 코드 지워도 됨)
+function setZoomBasedOnWidth() {
+  const windowWidth = window.innerWidth;
+  const minWidth = 600;
+  const page = document.querySelector("#page");
+
+  if (windowWidth < minWidth) {page.style.zoom = (windowWidth / minWidth);}
+  else page.style.zoom = 1;
+}
+window.addEventListener("resize", setZoomBasedOnWidth);
 
 export default Router;
