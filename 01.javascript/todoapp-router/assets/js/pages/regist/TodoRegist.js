@@ -35,8 +35,6 @@ const TodoRegist = function () {
   registBtn.addEventListener('click', async (e) => {
     const titleVal = titleInput.value;
     const detailVal = detailInput.value;
-    console.log(titleVal);
-    console.log(detailVal);
 
     // 값 체크
     if (!titleVal || !detailVal) {
