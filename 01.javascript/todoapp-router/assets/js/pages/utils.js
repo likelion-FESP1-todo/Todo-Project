@@ -8,4 +8,14 @@ const Button = function (svg, alt, btnEvent) {
   return btn;
 };
 
-export { Button };
+const SendButton = function (text, event) {
+  const btn = document.createElement('button');
+  const btnText = document.createTextNode(text);
+  btn.setAttribute('type', 'button');
+  btn.className = 'Todo-button';
+  btn.appendChild(btnText);
+  btn.addEventListener('click', event);
+  return btn;
+};
+
+export { Button, SendButton };

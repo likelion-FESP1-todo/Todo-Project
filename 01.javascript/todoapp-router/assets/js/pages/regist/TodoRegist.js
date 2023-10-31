@@ -2,7 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
-import { Button } from '../utils.js';
+import { Button, SendButton } from '../utils.js';
 
 const TodoRegist = function () {
   const page = document.createElement('div');
@@ -35,13 +35,7 @@ const TodoRegist = function () {
   content.appendChild(contentInput);
 
   // button
-  const registBtn = document.createElement('button');
-  const btnText = document.createTextNode('등록하기');
-  registBtn.setAttribute('type', 'button');
-  registBtn.className = 'Todo-button';
-  registBtn.appendChild(btnText);
-
-  registBtn.addEventListener('click', async (e) => {
+  const registEvent = async function () {
     const titleVal = titleInput.value;
     const contentVal = contentInput.value;
     if (titleVal.length >= 50) {
@@ -71,7 +65,8 @@ const TodoRegist = function () {
     } catch (err) {
       console.error(err);
     }
-  });
+  };
+  const registBtn = SendButton('등록하기', registEvent);
 
   page.appendChild(header);
   page.appendChild(title);
