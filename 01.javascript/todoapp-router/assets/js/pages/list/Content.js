@@ -94,8 +94,10 @@ function createDeleteButton(item, pageNum, limitNum) {
 
           // 할 일이 1개이고 삭제할 경우
           if (ul_tag.children.length === 1 && ul_tag.children[0] === li_tag) {
-            if (Number(pageNum) !== 1) document.getElementById(`id_${pageNum}`).remove();
-            document.getElementById(`id_${Number(pageNum) - 1}`).click();
+            if (Number(pageNum) !== 1) {
+              document.getElementById(`id_${pageNum}`).remove();
+              document.getElementById(`id_${Number(pageNum) - 1}`).click();
+            } 
           } 
           // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
           else {
