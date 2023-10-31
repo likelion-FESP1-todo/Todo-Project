@@ -5,7 +5,7 @@ import Pagination from './Pagination.js';
 import Content from './Content.js';
 import { linkTo } from '../../Router.js';
 
-const TodoList = async function() {
+const TodoList = async function () {
   const page = document.createElement('div');
   page.setAttribute('id', 'page');
 
@@ -22,9 +22,9 @@ const TodoList = async function() {
   const pageNum = searchParam('page') || 1;
   const limitNum = searchParam('limit') || 10;
   const newContent = await Content(pageNum, limitNum);
+  page.insertBefore(newContent.content, page.childNodes[2]);
   const totalPages = newContent.response.data.pagination.totalPages;
   const totalNum = newContent.response.data.pagination.total;
-  page.insertBefore(newContent.content, page.childNodes[2]);  
 
   // 페이지네이션 (totalPage, limitNum, page태그)
   page.appendChild(Pagination(totalPages || 1, limitNum, page));
@@ -53,27 +53,27 @@ const TodoList = async function() {
 // 쿼리스트링 값 가져오기
 function searchParam(key) {
   return new URLSearchParams(location.search).get(key);
-};
+}
 
-function getToday(){
+function getToday() {
   const date = new Date();
   const year = date.getFullYear();
-  const month = ("0" + (1 + date.getMonth())).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
+  const month = ('0' + (1 + date.getMonth())).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
 
   const day_week = day_week_text[date.getDay()];
 
-  return year + "년 " + month + "월 " + day + "일" + ` (${day_week})`;
+  return year + '년 ' + month + '월 ' + day + '일' + ` (${day_week})`;
 }
 
 const day_week_text = {
-  0: "일",
-  1: "월",
-  2: "화",
-  3: "수",
-  4: "목",
-  5: "금",
-  6: "토",
-}
+  0: '일',
+  1: '월',
+  2: '화',
+  3: '수',
+  4: '목',
+  5: '금',
+  6: '토',
+};
 
 export default TodoList;

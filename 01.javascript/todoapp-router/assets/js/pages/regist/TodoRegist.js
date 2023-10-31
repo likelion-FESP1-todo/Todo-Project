@@ -2,6 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
+import { BackButton } from '../utils.js';
 
 const TodoRegist = function () {
   const page = document.createElement('div');
@@ -32,6 +33,10 @@ const TodoRegist = function () {
   const btnText = document.createTextNode('Todo 등록');
   registBtn.setAttribute('type', 'button');
   registBtn.appendChild(btnText);
+
+  // 뒤로가기 버튼
+  const backBtn = BackButton();
+
   registBtn.addEventListener('click', async (e) => {
     const titleVal = titleInput.value;
     const detailVal = detailInput.value;
@@ -63,6 +68,7 @@ const TodoRegist = function () {
   page.appendChild(content);
   page.appendChild(title);
   page.appendChild(detail);
+  page.appendChild(backBtn);
   page.appendChild(registBtn);
   page.appendChild(Footer());
 
