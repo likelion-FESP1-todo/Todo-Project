@@ -1,8 +1,6 @@
-// 페이지네이션
-import { linkTo } from '../../Router.js';
-import TodoList from './TodoList.js';
+import Content from './Content.js';
 
-const Pagination = function (totalPages = 1) {
+const Pagination = function(totalPages, limitNum, page) {
   const pageBtns = document.createElement('ul');
   for (let i = 0; i < totalPages; i++) {
     const pageBtn = document.createElement('li');
@@ -11,10 +9,22 @@ const Pagination = function (totalPages = 1) {
     pageBtn.appendChild(pageNum);
     pageBtns.appendChild(pageBtn);
 
-    pageBtn.addEventListener('click', (e) => {
+    pageBtn.addEventListener('click', async (e) => {
       const currntId = e.currentTarget.id.split('_')[1];
-      TodoList(currntId);
-      console.log(currntId);
+
+      // 기존 content 제거
+      const oldContent = document.getElementById('content') || false;
+      if (oldContent) {
+        page.removeChild(oldContent);
+      }
+
+      // 페이지에 따른 content 추가
+      const newContent = await Content(currntId, limitNum);
+      page.insertBefore(newContent.content, page.childNodes[1]);
+
+      // 도메인에 쿼리스트링 적용 및 history
+      const queryString = `?page=${currntId}&limit=${limitNum}`;
+      history.pushState({}, "todo", queryString);
     });
   }
   return pageBtns;
