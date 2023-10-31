@@ -55,23 +55,6 @@ const Content = async (pageNum, limitNum) => {
 
         if (li_tag) {
           if (window.confirm('정말 삭제하시겠습니까?')) {
-            const AllTasks = Number(document.querySelector('.TodoList-taskNum').innerText.split(' ')[0]);
-            document.querySelector('.TodoList-taskNum').innerText = `${AllTasks-1} tasks`;
-            
-            // 현재 페이지가 1페이지가 아니고 할 일이 1개인 경우
-            if (ul_tag.children.length === 1 && Number(pageNum) !== 1) {
-              // 마지막 할 일을 지울 때,
-              if (ul_tag.children[0] === li_tag) {
-                document.getElementById(`id_${pageNum}`).remove();
-                document.getElementById(`id_${Number(pageNum)-1}`).click();
-              }
-            } else {
-              document.getElementById(`id_${pageNum}`).click();
-            }
-
-            ul_tag.removeChild(li_tag);
-
-
             // url: /todolist/{_id}
             // method: DELETE
             try {
@@ -81,11 +64,27 @@ const Content = async (pageNum, limitNum) => {
               const data = response.data;
               console.log(data);
 
+              const AllTasks = Number(document.querySelector('.TodoList-taskNum').innerText.split(' ')[0]);
+              document.querySelector('.TodoList-taskNum').innerText = `${AllTasks-1} tasks`;
+              
+              // 현재 페이지가 1페이지가 아니고 할 일이 1개인 경우
+              if (ul_tag.children.length === 1 && Number(pageNum) !== 1) {
+                // 마지막 할 일을 지울 때,
+                if (ul_tag.children[0] === li_tag) {
+                  document.getElementById(`id_${pageNum}`).remove();
+                  document.getElementById(`id_${Number(pageNum)-1}`).click();
+                }
+              } else {
+                document.getElementById(`id_${pageNum}`).click();
+              }
+  
+              ul_tag.removeChild(li_tag);
+
               // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
               if ((AllTasks-1) % Number(limitNum) === 0) {
                 const totalPageNum = document.querySelectorAll('.TodoList-pageBtn').length;
                 document.getElementById(`id_${totalPageNum}`).remove();
-              }
+              }           
             } catch (err) {
               alert('삭제 실패');
               console.error(err);
