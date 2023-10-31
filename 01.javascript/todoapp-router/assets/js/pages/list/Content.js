@@ -10,20 +10,20 @@ const Content = async (pageNum, limitNum) => {
     );
 
     const ul = document.createElement('ul');
-    ul.setAttribute('class', 'todolist');
+    ul.setAttribute('class', 'todoUl');
 
     response.data?.items.forEach((item) => {
       const li = document.createElement('li');
-      li.setAttribute('class', 'todo_li');
+      li.setAttribute('class', 'TodoList-todoLi');
 
       // 메뉴 버튼 div
       const menuDiv = document.createElement('div');
-      menuDiv.setAttribute('class', 'todo_menu');
+      menuDiv.setAttribute('class', 'TodoList-todoMenu');
 
       // 상세조회 버튼
       const todoInfoLink = document.createElement('a');
       todoInfoLink.innerText = '상세조회';
-      todoInfoLink.setAttribute('class', 'move_datail');
+      todoInfoLink.setAttribute('class', 'TodoList-moveDatail');
       todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
       todoInfoLink.addEventListener('click', async function (e) {
         e.preventDefault(); // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
@@ -34,7 +34,7 @@ const Content = async (pageNum, limitNum) => {
       const todoDelete = document.createElement('button');
       todoDelete.innerText = '삭제';
       todoDelete.setAttribute('type', 'button');
-      todoDelete.setAttribute('class', 'move_datail');
+      todoDelete.setAttribute('class', 'TodoList-moveDatail');
       todoDelete.addEventListener('click', async (e) => {
         const id = item._id;
         const li_tag = e.target.parentNode;
@@ -70,7 +70,7 @@ const Content = async (pageNum, limitNum) => {
       // 완료 체크 박스
       const completeCheck = document.createElement('input');
       completeCheck.setAttribute('type', 'checkbox');
-      completeCheck.setAttribute('class', 'todo_check');
+      completeCheck.setAttribute('class', 'TodoList-todoCheck');
       completeCheck.addEventListener('click', async function (e) {
         titleTag.style.textDecoration = e.target.checked
           ? 'line-through'
