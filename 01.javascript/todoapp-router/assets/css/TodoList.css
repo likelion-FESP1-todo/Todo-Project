@@ -1,0 +1,35 @@
+.TodoList-H2 {
+  font-size: 30px;
+  font-family: LINESeedKR-Bd;
+}
+
+.TodoList-taskNum {
+  
+}
+
+.TodoList-todoCheck {
+  margin-right: 10px;
+}
+
+.TodoList-moveDatail {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 25px;
+  font-size: 0.7rem;
+  border: 1px solid black;
+  background: black;
+  color: #fff;
+  margin-left: 10px;
+}
+
+.TodoList-todoLi {
+  display: flex;
+  align-items: center;
+}
+
+.TodoList-todoMenu {
+  display: flex;
+  flex-direction: column;
+}
