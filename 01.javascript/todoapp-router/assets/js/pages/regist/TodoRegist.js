@@ -22,8 +22,8 @@ const TodoRegist = function () {
   // content
   const detail = document.createElement('div');
   const detailText = document.createTextNode('상세내용');
-  const detailInput = document.createElement('input');
-  detailInput.setAttribute('type', 'text');
+  const detailInput = document.createElement('textarea');
+  // detailInput.setAttribute('type', 'text');
   detail.appendChild(detailText);
   detail.appendChild(detailInput);
 
