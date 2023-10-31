@@ -20,7 +20,7 @@
 .TodoInfo-content {
   font-size: 20px;
   height: 350px;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-bottom: 1px solid #777;
   margin-bottom: 28px;
   padding-bottom: 28px;

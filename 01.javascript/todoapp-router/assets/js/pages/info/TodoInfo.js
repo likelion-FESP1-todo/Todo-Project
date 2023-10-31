@@ -51,7 +51,6 @@ const TodoInfo = async function () {
 
     // 삭제하기 버튼
     const deleteEvent = async function () {
-      console.log("1111");
       if (window.confirm("정말 삭제하시겠습니까?")) {
         try {
           const response = await axios.delete(
@@ -59,7 +58,6 @@ const TodoInfo = async function () {
           );
           const data = response.data;
           alert("삭제 완료");
-          console.log(data);
           linkTo("/");
         } catch (err) {
           alert("삭제 실패");
