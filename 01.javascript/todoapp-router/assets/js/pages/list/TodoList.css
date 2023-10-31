@@ -1,0 +1,9 @@
+.todo_li {
+  display: flex;
+  align-items: center;
+}
+
+.menu-div {
+  display: flex;
+  flex-direction: column;
+}
