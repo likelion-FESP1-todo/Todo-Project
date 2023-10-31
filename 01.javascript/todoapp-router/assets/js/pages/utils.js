@@ -1,15 +1,21 @@
-// 뒤로가기 버튼
-const BackButton = function () {
-  const backBtn = document.createElement("button");
-  const backIcon = document.createElement("img");
-  backIcon.src = "/assets/img/backButton.svg";
-  backIcon.alt = "뒤로가기";
-  backBtn.appendChild(backIcon);
-  backBtn.addEventListener("click", () => {
-    window.history.back();
-  });
-
-  return backBtn;
+const Button = function (svg, alt, btnEvent) {
+  const btn = document.createElement('button');
+  const btnIcon = document.createElement('img');
+  btnIcon.src = `/assets/img/${svg}.svg`;
+  btnIcon.alt = alt;
+  btn.appendChild(btnIcon);
+  btn.addEventListener('click', btnEvent);
+  return btn;
 };
 
-export { BackButton };
+const SendButton = function (text, event) {
+  const btn = document.createElement('button');
+  const btnText = document.createTextNode(text);
+  btn.setAttribute('type', 'button');
+  btn.className = 'Todo-button';
+  btn.appendChild(btnText);
+  btn.addEventListener('click', event);
+  return btn;
+};
+
+export { Button, SendButton };

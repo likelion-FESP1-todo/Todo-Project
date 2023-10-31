@@ -1,0 +1,44 @@
+.TodoInfo-header {
+  justify-content: space-between;
+}
+
+.TodoInfo-header > *:nth-child(2) {
+  order: 3;
+  margin-right: 0;
+}
+
+.TodoInfo-header > *:nth-child(2) button {
+  width: 37px;
+  height: 37px;
+}
+
+.Todo-title {
+  font-size: 30px;
+  margin: 36px 0 21px;
+}
+
+.TodoInfo-content {
+  font-size: 20px;
+  height: 350px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #777;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+}
+
+.TodoInfo-contentInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.TodoInfo-dateGroup > p {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.TodoInfo-tag {
+  font-size: 16px;
+  font-family: LINESeedKR-Bd;
+}

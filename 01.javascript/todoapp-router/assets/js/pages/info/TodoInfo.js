@@ -2,7 +2,7 @@
 import Header from "../../layout/Header.js";
 import Footer from "../../layout/Footer.js";
 import { linkTo } from "../../Router.js";
-import { BackButton } from "../utils.js";
+import { Button } from "../utils.js";
 
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
@@ -12,9 +12,8 @@ const TodoInfo = async function () {
   page.setAttribute("id", "page");
 
   const header = Header("할일 상세 내용");
+  header.className = "Todo-header TodoInfo-header";
   const content = document.createElement("div");
-  const text = document.createTextNode(`_id=${_id} 상세 조회 화면`);
-  content.appendChild(text);
 
   let response;
 
@@ -22,75 +21,36 @@ const TodoInfo = async function () {
     response = await axios(`http://localhost:33088/api/todolist/${_id}`);
     const data = response.data.item;
 
-    // 투두 id
-    const idNum = document.createElement("span");
-    const id = document.createTextNode(data._id);
-    idNum.appendChild(id);
-    content.appendChild(idNum);
-
     // 상세조회 타이틀
     const h2 = document.createElement("h2");
     const title = document.createTextNode(data.title);
     h2.appendChild(title);
+    h2.className = "Todo-title";
     content.appendChild(h2);
-
-    //완료, 미완료 표시
-    const tag = document.createElement("span");
-    const complete = document.createTextNode("완료");
-    const inComplete = document.createTextNode("미완료");
-    if (data.done === true) {
-      tag.appendChild(complete);
-      content.appendChild(tag);
-    } else {
-      tag.appendChild(inComplete);
-      content.appendChild(tag);
-    }
 
     // 상세조회 내용
     const descArea = document.createElement("div");
     const description = document.createTextNode(data.content);
     descArea.appendChild(description);
+    descArea.className = "TodoInfo-content";
     content.appendChild(descArea);
 
-    //생성 날짜
-    const date1 = document.createElement("p");
-    const createDate = document.createTextNode(data.createdAt);
-    console.log(createDate);
-    date1.appendChild(createDate);
-    content.appendChild(date1);
-
-    //업데이트 날짜
-    const date2 = document.createElement("p");
-    const updateDate = document.createTextNode(data.updatedAt);
-    date2.appendChild(updateDate);
-    content.appendChild(date2);
-
-    //삭제, 수정 버튼
+    //삭제, 수정 버튼 그룹화
     const btnGroup = document.createElement("div");
     header.appendChild(btnGroup);
     btnGroup.className = "TodoInfo-btnGroup";
 
     //수정하기 버튼
-    const editBtn = document.createElement("a");
-    const editIcon = document.createElement("img");
-    editIcon.src = "/assets/img/editButton.svg";
-    editIcon.alt = "수정하기";
-    editBtn.appendChild(editIcon);
-    btnGroup.appendChild(editBtn);
-    editBtn.addEventListener("click", () => {
+    const editEvent = function () {
       const queryString = `?_id=${data._id}`;
       history.pushState({}, "update", queryString);
       linkTo(`update${queryString}`);
-    });
+    };
+    const editBtn = Button("editButton", "수정하기", editEvent);
+    btnGroup.appendChild(editBtn);
 
     // 삭제하기 버튼
-    const deleteBtn = document.createElement("button");
-    deleteBtn.type = "button";
-    deleteBtn.setAttribute("type", "button");
-    const deleteIcon = document.createElement("img");
-    deleteIcon.src = "/assets/img/deleteButton.svg";
-    deleteIcon.alt = "삭제하기";
-    deleteBtn.addEventListener("click", async () => {
+    const deleteEvent = async function () {
       console.log("1111");
       if (window.confirm("정말 삭제하시겠습니까?")) {
         try {
@@ -106,13 +66,57 @@ const TodoInfo = async function () {
           console.error(err);
         }
       }
-    });
-    deleteBtn.appendChild(deleteIcon);
+    };
+    const deleteBtn = Button("deleteButton", "삭제하기", deleteEvent);
     btnGroup.appendChild(deleteBtn);
 
     // 뒤로가기 버튼
-    const backBtn = BackButton();
+    const backEvent = function () {
+      window.history.back();
+    };
+    const backBtn = Button("backButton", "뒤로가기", backEvent);
+    backBtn.className = "backButton";
     header.appendChild(backBtn);
+
+    //contentInfo
+    const contentInfo = document.createElement("div");
+
+    //생성날짜, 업데이트 날짜 그룹화
+    const dateGroup = document.createElement("div");
+    dateGroup.className = "TodoInfo-dateGroup";
+    contentInfo.appendChild(dateGroup);
+
+    //생성 날짜
+    const date1 = document.createElement("p");
+    const createDate = document.createTextNode(`생성일 : ${data.createdAt}`);
+    date1.appendChild(createDate);
+    dateGroup.appendChild(date1);
+
+    //업데이트 날짜
+    const date2 = document.createElement("p");
+    const updateDate = document.createTextNode(
+      `최종수정일 : ${data.updatedAt}`
+    );
+    date2.appendChild(updateDate);
+    dateGroup.appendChild(date2);
+
+    //완료, 미완료 표시
+    const tag = document.createElement("span");
+    tag.className = "TodoInfo-tag";
+    const complete = document.createTextNode("할 일 완료");
+    const inComplete = document.createTextNode("할 일 미완료");
+    if (data.done === true) {
+      tag.appendChild(complete);
+      contentInfo.appendChild(tag);
+      tag.style.color = "#3D53C7";
+    } else {
+      tag.appendChild(inComplete);
+      contentInfo.appendChild(tag);
+      tag.style.color = "#666666";
+    }
+
+    content.appendChild(contentInfo);
+    contentInfo.className = "TodoInfo-contentInfo";
   } catch (error) {
     console.log(err);
   }
