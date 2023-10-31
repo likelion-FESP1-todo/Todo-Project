@@ -3,6 +3,7 @@ import { linkTo } from '../../Router.js';
 const Content = async (pageNum, limitNum) => {
   const content = document.createElement('div');
   content.setAttribute('id', 'content');
+  content.setAttribute('class', 'TodoList-content');
   let response;
   try {
     response = await axios(
@@ -15,6 +16,18 @@ const Content = async (pageNum, limitNum) => {
     response.data?.items.forEach((item) => {
       const li = document.createElement('li');
       li.setAttribute('class', 'TodoList-todoLi');
+
+      // ⋮ 버튼 div
+      const dotMenu = document.createElement('div');
+      dotMenu.setAttribute('class', 'TodoList-dotMenu');
+      dotMenu.innerText = '⋮';
+      dotMenu.addEventListener('click', (e) => {
+        const todoMenuStyle = e.target.parentNode.querySelector('.TodoList-todoMenu');
+        todoMenuStyle.style.display = todoMenuStyle.style.display === 'flex' ? 'none' : 'flex';
+        setTimeout(() => {
+          todoMenuStyle.style.display = "none";
+        }, 5000);
+      });
 
       // 메뉴 버튼 div
       const menuDiv = document.createElement('div');
@@ -34,14 +47,32 @@ const Content = async (pageNum, limitNum) => {
       const todoDelete = document.createElement('button');
       todoDelete.innerText = '삭제';
       todoDelete.setAttribute('type', 'button');
-      todoDelete.setAttribute('class', 'TodoList-moveDatail');
+      todoDelete.setAttribute('class', 'TodoList-moveDatail2');
       todoDelete.addEventListener('click', async (e) => {
         const id = item._id;
-        const li_tag = e.target.parentNode;
+        const li_tag = e.target.parentNode.parentNode;
         const ul_tag = li_tag.parentNode;
 
         if (li_tag) {
           if (window.confirm('정말 삭제하시겠습니까?')) {
+            const AllTasks = Number(document.querySelector('.TodoList-taskNum').innerText.split(' ')[0]);
+            document.querySelector('.TodoList-taskNum').innerText = `${AllTasks-1} tasks`;
+            
+            // 현재 페이지가 1페이지가 아니고 할 일이 1개인 경우
+            if (ul_tag.children.length === 1 && Number(pageNum) !== 1) {
+              // 마지막 할 일을 지울 때,
+              if (ul_tag.children[0] === li_tag) {
+                document.getElementById(`id_${pageNum}`).remove();
+                document.getElementById(`id_${Number(pageNum)-1}`).click();
+              }
+            } else {
+              document.getElementById(`id_${Number(pageNum)}`).click();
+              console.log(AllTasks-1 % Number(limit))
+              // if (AllTasks-1 % Number(limit)) {
+
+              // }
+            }
+
             ul_tag.removeChild(li_tag);
 
             // url: /todolist/{_id}
@@ -65,9 +96,14 @@ const Content = async (pageNum, limitNum) => {
 
       // 타이틀
       const titleTag = document.createElement('span');
+      titleTag.setAttribute('class', 'TodoList-Title');
       titleTag.innerText = item.title;
 
       // 완료 체크 박스
+      const checkLabel = document.createElement('label');
+      checkLabel.setAttribute('class', 'TodoList-checkLabel');
+      const checkSpan = document.createElement('span');
+      checkSpan.setAttribute('class', 'TodoList-checkSpan');
       const completeCheck = document.createElement('input');
       completeCheck.setAttribute('type', 'checkbox');
       completeCheck.setAttribute('class', 'TodoList-todoCheck');
@@ -97,8 +133,11 @@ const Content = async (pageNum, limitNum) => {
         }
       });
 
-      li.appendChild(completeCheck);
+      checkLabel.appendChild(completeCheck);
+      checkLabel.appendChild(checkSpan);
+      li.appendChild(checkLabel);
       li.appendChild(titleTag);
+      li.appendChild(dotMenu);
       li.appendChild(menuDiv);
       ul.appendChild(li);
 
