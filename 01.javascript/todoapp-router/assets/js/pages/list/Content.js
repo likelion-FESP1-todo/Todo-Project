@@ -126,9 +126,9 @@ function createTitleTag(title) {
   titleTag.setAttribute("class", "TodoList-Title");
   titleTag.innerText = title;
 
-  titleTag.addEventListener('click', (e) => {
-    e.target.previousElementSibling.click();
-  });
+  // titleTag.addEventListener('click', (e) => {
+  //   e.target.previousElementSibling.click();
+  // });
   return titleTag;
 }
 
