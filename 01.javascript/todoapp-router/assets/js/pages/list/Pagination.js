@@ -1,6 +1,6 @@
 import Content from './Content.js';
 
-const Pagination = function(totalPages, limitNum, nowPage, page) {
+const Pagination = function(totalPages, limitNum, nowPage, content) {
 
   const pageBtns = document.createElement('ul');
   pageBtns.setAttribute('class', 'TodoList-pageBox');
@@ -29,14 +29,11 @@ const Pagination = function(totalPages, limitNum, nowPage, page) {
       currntTag.classList.add('TodoList-now');
 
       // 기존 content 제거
-      const oldContent = document.getElementById('content') || false;
-      if (oldContent) {
-        page.removeChild(oldContent);
-      }
+      content.innerHTML = '';
 
       // 페이지에 따른 content 추가
       const newContent = await Content(currntId, limitNum);
-      page.insertBefore(newContent.content, page.childNodes[2]);
+      content.appendChild(newContent.ul)
 
       // 도메인에 쿼리스트링 적용 및 history
       const queryString = `?page=${currntId}&limit=${limitNum}`;

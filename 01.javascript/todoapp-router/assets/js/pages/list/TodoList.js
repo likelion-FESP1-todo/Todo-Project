@@ -8,8 +8,6 @@ const TodoList = async function () {
   const page = document.createElement('div');
   page.setAttribute('id', 'page');
 
-  // header
-  // page.appendChild(Header('TODO App 목록 조회'));
 
   // 오늘 날짜 조회
   const H2 = document.createElement('h2');
@@ -17,17 +15,23 @@ const TodoList = async function () {
   H2.innerText = getToday();
   page.appendChild(H2);
 
-  // 초기 content
-  const pageNum = searchParam('page') || 1;
-  const limitNum = searchParam('limit') || 5;
-  const newContent = await Content(pageNum, limitNum);
 
-  page.insertBefore(newContent.content, page.childNodes[2]);
-  const totalPages = newContent.response.data.pagination.totalPages;
-  const totalNum = newContent.response.data.pagination.total;
+  // 초기 content
+  const content = document.createElement("div");
+  content.setAttribute("id", "content");
+  content.setAttribute("class", "TodoList-content");
+  page.appendChild(content);
+
+  const pageNum = searchParam('page') || 1;             // 페이지 번호 초기값 설정
+  const limitNum = searchParam('limit') || 5;           // 목록 개수 초기값 설정
+  const newContent = await Content(pageNum, limitNum);  // 페이지 번호 및 목록 개수로 목록 가져오기
+  const totalPages = newContent.response.data.pagination.totalPages;  // 전체 페이지 수
+  const totalNum = newContent.response.data.pagination.total;         // 전체 목록 수
+  content.appendChild(newContent.ul);
+
 
   // 페이지네이션 (totalPage, limitNum, page태그)
-  page.appendChild(Pagination(totalPages || 1, limitNum, pageNum, page));
+  page.appendChild(Pagination(totalPages || 1, limitNum, pageNum, content));
   
 
   // 총 Task 수
@@ -35,6 +39,7 @@ const TodoList = async function () {
   taskNum.setAttribute('class', 'TodoList-taskNum');
   taskNum.innerText = `${totalNum} tasks`;
   page.insertBefore(taskNum, page.childNodes[1]);
+
 
   // 등록 버튼
   const btnRegist = document.createElement('button');
@@ -44,6 +49,7 @@ const TodoList = async function () {
     linkTo('regist');
   });
   page.appendChild(btnRegist);
+
 
   // footer
   page.appendChild(Footer());
@@ -56,6 +62,7 @@ function searchParam(key) {
   return new URLSearchParams(location.search).get(key);
 }
 
+// 오늘 날짜 가져와서 변환
 function getToday() {
   const date = new Date();
   const year = date.getFullYear();
