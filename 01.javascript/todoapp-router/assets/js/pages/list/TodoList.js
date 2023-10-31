@@ -1,5 +1,4 @@
 // 할일 목록
-import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import Pagination from './Pagination.js';
 import Content from './Content.js';
@@ -20,14 +19,16 @@ const TodoList = async function () {
 
   // 초기 content
   const pageNum = searchParam('page') || 1;
-  const limitNum = searchParam('limit') || 10;
+  const limitNum = searchParam('limit') || 5;
   const newContent = await Content(pageNum, limitNum);
+
   page.insertBefore(newContent.content, page.childNodes[2]);
   const totalPages = newContent.response.data.pagination.totalPages;
   const totalNum = newContent.response.data.pagination.total;
 
   // 페이지네이션 (totalPage, limitNum, page태그)
-  page.appendChild(Pagination(totalPages || 1, limitNum, page));
+  page.appendChild(Pagination(totalPages || 1, limitNum, pageNum, page));
+  
 
   // 총 Task 수
   const taskNum = document.createElement("p");
@@ -37,8 +38,8 @@ const TodoList = async function () {
 
   // 등록 버튼
   const btnRegist = document.createElement('button');
-  const btnTitle = document.createTextNode('등록');
-  btnRegist.appendChild(btnTitle);
+  btnRegist.innerHTML = "&#43";
+  btnRegist.setAttribute('class', 'TodoList-writeBtn');
   btnRegist.addEventListener('click', () => {
     linkTo('regist');
   });
