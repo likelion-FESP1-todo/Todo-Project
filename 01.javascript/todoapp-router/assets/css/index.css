@@ -81,7 +81,7 @@ select,
 textarea,
 button {
   font-size: 14px;
-  line-height: 1.3;
+  /* line-height: 1.3; */
   font-family: HelveticaNeue, AppleSDGothicNeo-Regular, tahoma, "Malgun Gothic",
     "맑은 고딕", dotum, "돋움", sans-serif;
   color: #333;
