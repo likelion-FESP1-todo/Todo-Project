@@ -81,7 +81,7 @@ const Content = async (pageNum, limitNum) => {
               ul_tag.removeChild(li_tag);
 
               // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
-              if ((AllTasks-1) % Number(limitNum) === 0) {
+              if (((AllTasks-1) % Number(limitNum) === 0) &&  (AllTasks) > 5) {
                 const totalPageNum = document.querySelectorAll('.TodoList-pageBtn').length;
                 document.getElementById(`id_${totalPageNum}`).remove();
               }           
