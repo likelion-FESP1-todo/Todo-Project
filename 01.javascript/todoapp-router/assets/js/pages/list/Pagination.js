@@ -20,7 +20,8 @@ const Pagination = function(totalPages, limitNum, page) {
 
       // 페이지에 따른 content 추가
       const newContent = await Content(currntId, limitNum);
-      page.insertBefore(newContent.content, page.childNodes[1]);
+      console.log(newContent)
+      page.insertBefore(newContent.content, page.childNodes[2]);
 
       // 도메인에 쿼리스트링 적용 및 history
       const queryString = `?page=${currntId}&limit=${limitNum}`;
