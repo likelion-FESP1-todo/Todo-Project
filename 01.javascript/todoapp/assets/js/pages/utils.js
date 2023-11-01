@@ -19,7 +19,7 @@ const SendButton = function (text, event) {
 };
 
 const Input = function (title = '') {
-  const inputDiv = document.createElement('div');
+  const inputDiv = document.createElement('h2');
   const input = document.createElement('input');
   input.setAttribute('type', 'text');
   input.setAttribute('placeholder', '제목을 입력해주세요.');
@@ -30,7 +30,7 @@ const Input = function (title = '') {
 };
 
 const Textarea = function (content = '') {
-  const textareaDiv = document.createElement('div');
+  const textareaDiv = document.createElement('section');
   const textarea = document.createElement('textarea');
   textarea.setAttribute('placeholder', '내용을 적어주세요.');
   const contentText = document.createTextNode(content);
