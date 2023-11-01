@@ -1,134 +1,87 @@
 // 할일 목록
-import Header from "../../layout/Header.js";
-import Footer from "../../layout/Footer.js";
-import TodoRegist from "../regist/TodoRegist.js";
-import TodoInfo from "../info/TodoInfo.js";
+import Footer from '../../layout/Footer.js';
+import Pagination from './Pagination.js';
+import Content from './Content.js';
+import { linkTo } from '../../Router.js';
 
 const TodoList = async function () {
-  const page = document.createElement("div");
-  page.setAttribute("id", "page");
+  const page = document.createElement('div');
+  page.setAttribute('id', 'page');
 
+
+  // 오늘 날짜 조회
+  const H2 = document.createElement('h2');
+  H2.setAttribute('class', 'TodoList-H2');
+  H2.innerText = getToday();
+  page.appendChild(H2);
+
+
+  // 초기 content
   const content = document.createElement("div");
   content.setAttribute("id", "content");
-  let response;
-  try {
-    response = await axios(
-      "http://localhost:33088/api/todolist?page=1&limit=5"
-    );
-
-    const ul = document.createElement("ul");
-    ul.setAttribute("class", "todolist");
-
-    response.data?.items.forEach((item) => {
-      const li = document.createElement("li");
-
-      // 상세조회 버튼
-      const todoInfoLink = document.createElement("a");
-      todoInfoLink.innerText = "상세조회";
-      todoInfoLink.setAttribute("class", "move_datail");
-      todoInfoLink.setAttribute("href", `info?_id=${item._id}`);
-
-      // 삭제 버튼
-      const todoDelete = document.createElement("button");
-      todoDelete.innerText = "삭제";
-      todoDelete.setAttribute("type", "button");
-      todoDelete.setAttribute("class", "move_datail");
-      todoDelete.addEventListener("click", async (e) => {
-        const id = item._id;
-        const li_tag = e.target.parentNode;
-        const ul_tag = li_tag.parentNode;
-
-        if (li_tag) {
-          if (window.confirm("정말 삭제하시겠습니까?")) {
-            ul_tag.removeChild(li_tag);
-
-            // url: /todolist/{_id}
-            // method: DELETE
-            try {
-              const response = await axios.delete(
-                `http://localhost:33088/api/todolist/${id}`
-              );
-              const data = response.data;
-            } catch (err) {
-              alert("삭제 실패");
-              console.error(err);
-            }
-          }
-        }
-      });
-
-      // 타이틀
-      const titleTag = document.createElement("span");
-      titleTag.innerText = item.title;
-
-      // 완료 체크 박스
-      const completeCheck = document.createElement("input");
-      completeCheck.setAttribute("type", "checkbox");
-      completeCheck.setAttribute("class", "check");
-      completeCheck.addEventListener("click", async function (e) {
-        titleTag.style.textDecoration = e.target.checked
-          ? "line-through"
-          : "unset";
-
-        // check 후 서버 통신으로 done을 바꾸기
-        // url: /todolist/{_id}
-        // method: DELETE
-        try {
-          const body = {
-            title: item.title,
-            content: item.content,
-            done: e.target.checked,
-          };
-          const response = await axios.patch(
-            `http://localhost:33088/api/todolist/${item._id}`,
-            body
-          );
-          const data = response.data;
-        } catch (err) {
-          alert("수정 실패");
-          console.error(err);
-        }
-      });
-
-      // 상세조회 버튼 클릭 시 동작
-      todoInfoLink.addEventListener("click", async function (e) {
-        e.preventDefault(); // 브라우저의 기본 동작 취소(<a> 태그 동작 안하도록)
-        const infoPage = await TodoInfo({ _id: item._id });
-        document.querySelector("#page").replaceWith(infoPage);
-      });
-
-      li.appendChild(completeCheck);
-      li.appendChild(titleTag);
-      li.appendChild(todoInfoLink);
-      li.appendChild(todoDelete);
-      ul.appendChild(li);
-
-      // 완료 목록 체크
-      if (item.done) {
-        completeCheck.checked = true;
-        titleTag.style.textDecoration = "line-through";
-      }
-    });
-    content.appendChild(ul);
-
-    const btnRegist = document.createElement("button");
-    const btnTitle = document.createTextNode("등록");
-    btnRegist.appendChild(btnTitle);
-    content.appendChild(btnRegist);
-
-    btnRegist.addEventListener("click", () => {
-      const registPage = TodoRegist();
-      document.querySelector("#page").replaceWith(registPage);
-    });
-  } catch (err) {
-    const error = document.createTextNode("일시적인 오류 발생");
-    content.appendChild(error);
-  }
-
-  page.appendChild(Header("TODO App 목록 조회"));
+  content.setAttribute("class", "TodoList-content");
   page.appendChild(content);
+
+  const pageNum = searchParam('page') || 1;             // 페이지 번호 초기값 설정
+  const limitNum = searchParam('limit') || 5;           // 목록 개수 초기값 설정
+  const newContent = await Content(pageNum, limitNum);  // 페이지 번호 및 목록 개수로 목록 가져오기
+  const totalPages = newContent.response.data.pagination.totalPages;  // 전체 페이지 수
+  const totalNum = newContent.response.data.pagination.total;         // 전체 목록 수
+  content.appendChild(newContent.ul);
+
+
+  // 페이지네이션 (totalPage, limitNum, page태그)
+  page.appendChild(Pagination(totalPages || 1, limitNum, pageNum, content));
+  
+
+  // 총 Task 수
+  const taskNum = document.createElement("p");
+  taskNum.setAttribute('class', 'TodoList-taskNum');
+  taskNum.innerText = `${totalNum} tasks`;
+  page.insertBefore(taskNum, page.childNodes[1]);
+
+
+  // 등록 버튼
+  const btnRegist = document.createElement('button');
+  btnRegist.innerHTML = "&#43";
+  btnRegist.setAttribute('class', 'TodoList-writeBtn');
+  btnRegist.addEventListener('click', () => {
+    linkTo('regist');
+  });
+  page.appendChild(btnRegist);
+
+
+  // footer
   page.appendChild(Footer());
+
   return page;
+};
+
+// 쿼리스트링 값 가져오기
+function searchParam(key) {
+  return new URLSearchParams(location.search).get(key);
+}
+
+// 오늘 날짜 가져와서 변환
+function getToday() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ('0' + (1 + date.getMonth())).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+
+  const day_week = day_week_text[date.getDay()];
+
+  return year + '년 ' + month + '월 ' + day + '일' + ` (${day_week})`;
+}
+
+const day_week_text = {
+  0: '일',
+  1: '월',
+  2: '화',
+  3: '수',
+  4: '목',
+  5: '금',
+  6: '토',
 };
 
 export default TodoList;
