@@ -8,7 +8,6 @@ import { BackEvent, DeleteEvent } from '../ButtonEvent.js';
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
   const _id = params.get('_id');
-  s;
   const page = document.createElement('div');
   page.setAttribute('id', 'page');
 
@@ -46,7 +45,7 @@ const TodoInfo = async function () {
   }
   btnGroup.appendChild(editBtn);
 
-  const deleteBtn = Button('deleteButton', '삭제하기', DeleteEvent);
+  const deleteBtn = Button('deleteButton', '삭제하기', () => DeleteEvent(_id));
   btnGroup.appendChild(deleteBtn);
 
   const backBtn = Button('backButton', '뒤로가기', BackEvent);
