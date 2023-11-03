@@ -1,23 +1,3 @@
-const Button = function (svg, alt, btnEvent) {
-  const btn = document.createElement('button');
-  const btnIcon = document.createElement('img');
-  btnIcon.src = `/assets/img/${svg}.svg`;
-  btnIcon.alt = alt;
-  btn.appendChild(btnIcon);
-  btn.addEventListener('click', btnEvent);
-  return btn;
-};
-
-const SendButton = function (text, event) {
-  const btn = document.createElement('button');
-  const btnText = document.createTextNode(text);
-  btn.setAttribute('type', 'button');
-  btn.className = 'Todo-button';
-  btn.appendChild(btnText);
-  btn.addEventListener('click', event);
-  return btn;
-};
-
 const Input = function (title = '') {
   const inputDiv = document.createElement('h2');
   const input = document.createElement('input');
@@ -27,6 +7,19 @@ const Input = function (title = '') {
   input.className = 'Todo-titleInput';
   inputDiv.appendChild(input);
   return inputDiv;
+};
+
+const IsValidateInput = function (titleVal, contentVal) {
+  if (titleVal.length >= 50) {
+    alert('50자 미만으로 입력해주세요.');
+    titleVal = titleInput.value.substring(0, 50);
+    return false;
+  }
+  if (!titleVal || !contentVal) {
+    alert('제목과 상세내용을 모두 입력해주세요!');
+    return false;
+  }
+  return true;
 };
 
 const Textarea = function (content = '') {
@@ -39,4 +32,4 @@ const Textarea = function (content = '') {
   textareaDiv.appendChild(textarea);
   return textareaDiv;
 };
-export { Button, SendButton, Input, Textarea };
+export { Input, IsValidateInput, Textarea };

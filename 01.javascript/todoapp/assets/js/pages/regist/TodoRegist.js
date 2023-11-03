@@ -2,8 +2,8 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
-import { Button, SendButton, Input, Textarea } from '../utils.js';
-import { BackEvent, IsValidateInput } from '../ButtonEvent.js';
+import { Button, SendButton, BackEvent } from '../buttonUtils.js';
+import { Input, IsValidateInput, Textarea } from '../registUpdateUtils.js';
 
 const TodoRegist = function () {
   const page = document.createElement('div');
@@ -25,8 +25,6 @@ const TodoRegist = function () {
     if (!IsValidateInput(titleVal, contentVal)) {
       return;
     }
-    // url: /todolist
-    // method: POST
     try {
       const body = { title: titleVal, content: contentVal, done: false };
       await axios.post('http://localhost:33088/api/todolist', body);

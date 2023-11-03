@@ -2,8 +2,8 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
-import { Button, SendButton, Input, Textarea } from '../utils.js';
-import { BackEvent, IsValidateInput } from '../ButtonEvent.js';
+import { Button, SendButton, BackEvent } from '../buttonUtils.js';
+import { Input, IsValidateInput, Textarea } from '../registUpdateUtils.js';
 
 const TodoUpdate = async function () {
   const page = document.createElement('div');
@@ -41,8 +41,6 @@ const TodoUpdate = async function () {
     if (!IsValidateInput(titleVal, contentVal)) {
       return;
     }
-    // url: /todolist
-    // method: POST
     try {
       const body = { title: titleVal, content: contentVal, done: data.done };
       await axios.patch(`http://localhost:33088/api/todolist/${_id}`, body);

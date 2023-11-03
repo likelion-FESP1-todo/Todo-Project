@@ -2,8 +2,7 @@
 import Header from '../../layout/Header.js';
 import Footer from '../../layout/Footer.js';
 import { linkTo } from '../../Router.js';
-import { Button } from '../utils.js';
-import { BackEvent, DeleteEvent } from '../ButtonEvent.js';
+import { Button, BackEvent, DeleteEvent } from '../buttonUtils.js';
 
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
