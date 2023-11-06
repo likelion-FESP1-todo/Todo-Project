@@ -2,6 +2,7 @@ import TodoList from './pages/list/TodoList';
 import TodoRegist from './pages/regist/TodoRegist';
 import TodoInfo from './pages/info/TodoInfo';
 import TodoUpdate from './pages/update/TodoUpdate';
+import Error404 from './pages/errors/Error404';
 
 async function getPage() {
   let page;
@@ -19,9 +20,7 @@ async function getPage() {
       page = TodoUpdate();
       break;
     default:
-      page = document.createElement('div');
-      page.textContent = '404 Not Found';
-      break;
+      page = Error404();
   }
 
   return page;
