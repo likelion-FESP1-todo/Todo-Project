@@ -5,7 +5,7 @@ import axios from 'axios';
 async function fetchData(pageNum: number, limitNum: number) {
   try {
     const response = await axios<TodoListResponse>(
-      `http://localhost:33088/api/todolist?page=${pageNum}&limit=${limitNum}`,
+      `http://localhost:33088/api/todolist?page=${pageNum}&limit=${limitNum}`
     );
     return response;
   } catch (err) {
@@ -85,7 +85,7 @@ function createDeleteButton(item: TodoItem, pageNum: number, limitNum: number) {
   todoDelete.setAttribute('type', 'button');
   todoDelete.setAttribute('class', 'TodoList-moveDatail2');
   todoDelete.addEventListener('click', (e) =>
-    onDelete(e, item, pageNum, limitNum),
+    onDelete(e, item, pageNum, limitNum)
   );
 
   return todoDelete;
@@ -96,7 +96,7 @@ async function onDelete(
   e: MouseEvent,
   item: TodoItem,
   pageNum: number,
-  limitNum: number,
+  limitNum: number
 ) {
   const id = item._id;
   const li = (e.target as HTMLElement).parentNode!.parentNode;
@@ -152,7 +152,7 @@ function createTitleTag(title: string) {
 }
 
 // 체크박스 생성 함수
-function createCheckLabel(item: TodoItem, titleTag: HTMLSpanElement) {
+export function createCheckLabel(item: TodoItem) {
   const checkLabel = document.createElement('label');
   checkLabel.setAttribute('class', 'TodoList-checkLabel');
 
@@ -162,38 +162,36 @@ function createCheckLabel(item: TodoItem, titleTag: HTMLSpanElement) {
   const completeCheck = document.createElement('input');
   completeCheck.setAttribute('type', 'checkbox');
   completeCheck.setAttribute('class', 'TodoList-todoCheck');
-  completeCheck.addEventListener('click', async function (e) {
-    const target = e.target as HTMLInputElement;
-    titleTag.style.textDecoration = target?.checked ? 'line-through' : 'unset';
-
-    // check 후 서버 통신으로 done을 바꾸기
-    // url: /todolist/{_id}
-    // method: DELETE
-    try {
-      const body = {
-        title: item.title,
-        content: item.content,
-        done: target.checked,
-      };
-      await axios.patch(
-        `http://localhost:33088/api/todolist/${item._id}`,
-        body,
-      );
-    } catch (err) {
-      alert('수정 실패');
-      console.error(err);
-    }
-  });
 
   checkLabel.appendChild(completeCheck);
   checkLabel.appendChild(checkSpan);
 
-  if (item.done) {
-    completeCheck.checked = true;
-    titleTag.style.textDecoration = 'line-through';
-  }
+  return [checkLabel, completeCheck];
+}
 
-  return checkLabel;
+async function onCheck(e: Event, titleTag: HTMLSpanElement, item: TodoItem) {
+  const target = e.target as HTMLInputElement;
+  strikeSpan(titleTag, target);
+
+  // check 후 서버 통신으로 done을 바꾸기
+  // url: /todolist/{_id}
+  // method: DELETE
+  try {
+    const body = {
+      title: item.title,
+      content: item.content,
+      done: target.checked,
+    };
+    await axios.patch(`http://localhost:33088/api/todolist/${item._id}`, body);
+  } catch (err) {
+    alert('수정 실패');
+    console.error(err);
+  }
+}
+
+//완료된 할일 밑줄긋는 함수
+function strikeSpan(titleTag: HTMLSpanElement, target: HTMLInputElement) {
+  titleTag.style.textDecoration = target?.checked ? 'line-through' : 'unset';
 }
 
 // UI를 업데이트하는 함수
@@ -214,9 +212,15 @@ function renderUI(items: TodoItem[], pageNum: number, limitNum: number) {
     const dotMenu = createDotMenu();
     const menuDiv = createMenuDiv(item, pageNum, limitNum);
     const titleTag = createTitleTag(item.title);
-    const checkLabel = createCheckLabel(item, titleTag);
+    const checkLabel = createCheckLabel(item);
+    const complete = checkLabel[1] as HTMLInputElement;
+    complete.addEventListener('click', (e) => onCheck(e, titleTag, item));
+    if (item.done) {
+      complete.checked = true;
+      strikeSpan(titleTag, complete);
+    }
 
-    li.appendChild(checkLabel);
+    li.appendChild(checkLabel[0]);
     li.appendChild(titleTag);
     li.appendChild(dotMenu);
     li.appendChild(menuDiv);

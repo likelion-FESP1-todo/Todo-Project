@@ -5,6 +5,7 @@ import Footer from '../../layout/Footer';
 import axios from 'axios';
 import { linkTo } from '../../Router';
 import { Button, BackEvent, DeleteEvent } from '../utils/buttonUtils';
+import { createCheckLabel } from '../list/Content';
 
 const TodoInfo = async function () {
   const params = new URLSearchParams(location.search);
@@ -18,8 +19,9 @@ const TodoInfo = async function () {
   const section = document.createElement('section');
   try {
     const response = await axios<TodoResponse>(
-      `http://localhost:33088/api/todolist/${_id}`,
+      `http://localhost:33088/api/todolist/${_id}`
     );
+    //createCheckLabel =>
     const data = response?.data.item;
 
     const title = document.createElement('h2');
@@ -48,7 +50,7 @@ const TodoInfo = async function () {
     const deleteBtn = Button(
       'deleteButton',
       '삭제하기',
-      () => _id && DeleteEvent(_id),
+      () => _id && DeleteEvent(_id)
     );
     btnGroup.appendChild(deleteBtn);
 
@@ -77,9 +79,52 @@ const TodoInfo = async function () {
     updateDate.appendChild(updatedAt);
     dateGroup.appendChild(updateDate);
 
+    //Checkbox + 완료, 미완료 표시
+    const doneContainer = document.createElement('div');
+    doneContainer.className = 'TodoInfo-container';
+    doneContainer.style.display = 'flex';
+
+    //Checkbox
+    const checkBox = document.createElement('div');
+    checkBox.className = 'TodoInfo-checkbox';
+    const checkLabel = createCheckLabel(data);
+    const done = checkLabel[1] as HTMLInputElement;
+    done.addEventListener('click', async (e) => {
+      const target = e.target as HTMLInputElement;
+      try {
+        const body = {
+          title: data.title,
+          content: data.content,
+          done: target.checked,
+        };
+        const res = await axios.patch(
+          `http://localhost:33088/api/todolist/${data._id}`,
+          body
+        );
+        const text = document.querySelector<HTMLSpanElement>('.TodoInfo-tag');
+        if (res.data.item.done === true && text) {
+          text.innerText = '할 일 완료';
+          text.style.color = '#3D53C7';
+        }
+        if (res.data.item.done === false && text) {
+          text.innerText = '할 일 미완료';
+          text.style.color = '#666666';
+        }
+      } catch (err) {
+        alert('수정 실패');
+        console.error(err);
+      }
+    });
+    if (data.done) {
+      done.checked = true;
+    }
+
+    checkBox.appendChild(checkLabel[0]);
+
     //완료, 미완료 표시
     const tag = document.createElement('span');
     tag.className = 'TodoInfo-tag';
+    tag.style.fontSize = '24px';
     const complete = document.createTextNode('할 일 완료');
     const inComplete = document.createTextNode('할 일 미완료');
     if (data.done === true) {
@@ -89,7 +134,10 @@ const TodoInfo = async function () {
       tag.appendChild(inComplete);
       tag.style.color = '#666666';
     }
-    contentInfo.appendChild(tag);
+
+    doneContainer.append(checkBox, tag);
+
+    contentInfo.appendChild(doneContainer);
     section.appendChild(title);
     section.appendChild(content);
     section.appendChild(contentInfo);
