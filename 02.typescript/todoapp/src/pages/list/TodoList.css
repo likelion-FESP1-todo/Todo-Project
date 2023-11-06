@@ -66,7 +66,7 @@
 }
 
 .TodoList-todoCheck:checked + .TodoList-checkSpan::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 45%;
   left: 50%;
@@ -193,4 +193,25 @@
   border: 1px solid #7586e1;
   color: #fff;
   margin: 0 5px;
+}
+
+/* filter */
+.TodoList-filter {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.TodoList-btnAll,
+.TodoList-btnComplete,
+.TodoList-btnIncomplete {
+  padding: 5px 0px;
+  border-bottom: 3px solid #eee;
+  flex: 1;
+  transition: border-bottom 0.3s ease;
+}
+.TodoList-filter > button.active {
+  border-bottom: 3px solid #6174db;
 }
