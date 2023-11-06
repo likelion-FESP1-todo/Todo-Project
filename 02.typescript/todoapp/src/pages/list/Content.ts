@@ -22,31 +22,33 @@ function createDotMenu() {
 
   let timeoutId: number;
 
-  dotMenu.addEventListener('click', (e) => {
+  dotMenu.addEventListener('click', (e: MouseEvent) => {
     e.stopPropagation(); // 이벤트 버블링을 중지시킴
     const target = e.target as HTMLElement;
-    const todoMenu = target.parentNode!.querySelector('.TodoList-todoMenu');
-    const todoMenuStyle = todoMenu as HTMLElement;
-    todoMenuStyle.style.display = 'flex';
-
+    const todoMenu =
+      target.parentNode!.querySelector<HTMLElement>('.TodoList-todoMenu');
+    if (todoMenu) {
+      todoMenu.style.display = 'flex';
+    }
     if (timeoutId) clearTimeout(timeoutId);
 
     // 5초 후 메뉴 숨기기
     timeoutId = setTimeout(() => {
-      todoMenuStyle.style.display = 'none';
+      if (todoMenu) {
+        todoMenu.style.display = 'none';
+      }
     }, 3000);
   });
 
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
-    const todoMenu = document.querySelectorAll('.TodoList-todoMenu');
-    const todoMenuStyles = todoMenu as NodeListOf<Element>;
+    const todoMenu =
+      document.querySelectorAll<HTMLElement>('.TodoList-todoMenu');
 
-    todoMenuStyles.forEach((todoMenu) => {
-      const todoMenuStyle = todoMenu as HTMLElement;
+    todoMenu.forEach((todoMenu) => {
       // 클릭된 대상이 dotMenu나 TodoList-todoMenu가 아니라면
-      if (!dotMenu.contains(target) && !todoMenuStyle.contains(target)) {
-        todoMenuStyle.style.display = 'none';
+      if (!dotMenu.contains(target) && !todoMenu.contains(target)) {
+        todoMenu.style.display = 'none';
       }
     });
   });
@@ -82,55 +84,62 @@ function createDeleteButton(item: TodoItem, pageNum: number, limitNum: number) {
   todoDelete.textContent = '삭제';
   todoDelete.setAttribute('type', 'button');
   todoDelete.setAttribute('class', 'TodoList-moveDatail2');
-  todoDelete.addEventListener('click', async (e) => {
-    const id = item._id;
-    const target = e.target as HTMLElement;
-    const li = target.parentNode!.parentNode;
-    const li_tag = li as HTMLElement;
-    const ul = li_tag.parentNode;
-    const ul_tag = ul as HTMLElement;
-
-    if (li_tag) {
-      if (window.confirm('정말 삭제하시겠습니까?')) {
-        // url: /todolist/{_id}
-        // method: DELETE
-        try {
-          await axios.delete(`http://localhost:33088/api/todolist/${id}`);
-
-          // tasks 수 수정
-          const taskNum = document.querySelector(
-            '.TodoList-taskNum',
-          ) as HTMLElement;
-          const AllTasks = Number(taskNum?.innerText.split(' ')[0]);
-          taskNum.innerText = `${AllTasks - 1} tasks`;
-
-          // 할 일이 1개이고 삭제할 경우
-          if (ul_tag.children.length === 1 && ul_tag.children[0] === li_tag) {
-            if (Number(pageNum) !== 1) {
-              document.getElementById(`id_${pageNum}`)!.remove();
-              document.getElementById(`id_${Number(pageNum) - 1}`)!.click();
-            }
-          }
-          // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
-          else {
-            if ((AllTasks - 1) % Number(limitNum) === 0 && AllTasks > 5) {
-              const totalPageNum =
-                document.querySelectorAll('.TodoList-pageBtn').length;
-              document.getElementById(`id_${totalPageNum}`)!.remove();
-            }
-            document.getElementById(`id_${Number(pageNum)}`)!.click();
-          }
-
-          ul_tag.removeChild(li_tag);
-        } catch (err) {
-          alert('삭제 실패');
-          console.error(err);
-        }
-      }
-    }
-  });
+  todoDelete.addEventListener('click', (e) =>
+    onDelete(e, item, pageNum, limitNum),
+  );
 
   return todoDelete;
+}
+
+//Delete Event
+async function onDelete(
+  e: MouseEvent,
+  item: TodoItem,
+  pageNum: number,
+  limitNum: number,
+) {
+  const id = item._id;
+  const li = (e.target as HTMLElement).parentNode!.parentNode;
+  const ul_tag = li && li.parentNode;
+  if (!ul_tag) {
+    return;
+  }
+
+  if (!window.confirm('정말 삭제하시겠습니까?')) {
+    return;
+  }
+  // url: /todolist/{_id}
+  // method: DELETE
+  try {
+    await axios.delete(`http://localhost:33088/api/todolist/${id}`);
+
+    // tasks 수정
+    const taskNum = document.querySelector<HTMLElement>('.TodoList-taskNum');
+    const AllTasks = Number(taskNum?.innerText.split(' ')[0]);
+    taskNum!.innerText = `${AllTasks - 1} tasks`;
+
+    // 할 일이 1개이고 삭제할 경우
+    if (ul_tag.children.length === 1 && ul_tag.children[0] === li) {
+      if (Number(pageNum) !== 1) {
+        document.getElementById(`id_${pageNum}`)!.remove();
+        document.getElementById(`id_${Number(pageNum) - 1}`)!.click();
+      }
+    }
+    // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
+    else {
+      if ((AllTasks - 1) % Number(limitNum) === 0 && AllTasks > 5) {
+        const totalPageNum =
+          document.querySelectorAll('.TodoList-pageBtn').length;
+        document.getElementById(`id_${totalPageNum}`)!.remove();
+      }
+      document.getElementById(`id_${Number(pageNum)}`)!.click();
+    }
+
+    ul_tag.removeChild(li);
+  } catch (err) {
+    alert('삭제 실패');
+    console.error(err);
+  }
 }
 
 // 타이틀 생성 함수
@@ -139,9 +148,6 @@ function createTitleTag(title: string) {
   titleTag.setAttribute('class', 'TodoList-Title');
   titleTag.innerText = title;
 
-  // titleTag.addEventListener('click', (e) => {
-  //   e.target.previousElementSibling.click();
-  // });
   return titleTag;
 }
 
@@ -158,7 +164,7 @@ function createCheckLabel(item: TodoItem, titleTag: HTMLSpanElement) {
   completeCheck.setAttribute('class', 'TodoList-todoCheck');
   completeCheck.addEventListener('click', async function (e) {
     const target = e.target as HTMLInputElement;
-    titleTag.style.textDecoration = target.checked ? 'line-through' : 'unset';
+    titleTag.style.textDecoration = target?.checked ? 'line-through' : 'unset';
 
     // check 후 서버 통신으로 done을 바꾸기
     // url: /todolist/{_id}

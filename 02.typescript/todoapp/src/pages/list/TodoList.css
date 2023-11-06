@@ -3,13 +3,13 @@
   flex-direction: row;
 }
 
-.TodoList-H2 {
+.TodoList-Header > h1 {
   font-size: 30px;
   font-family: LINESeedKR-Bd;
 }
 
 .TodoList-taskNum {
-  color: #7586E1;
+  color: #7586e1;
   font-size: 20px;
   font-family: LINESeedKR-Bd;
 }
@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   margin: 16px 0;
-  border: 1px solid #6174DB;
+  border: 1px solid #6174db;
   border-radius: 10px;
   height: 62px;
   padding: 0 20px;
@@ -56,7 +56,7 @@
   height: 30px;
   margin-right: 22px;
   border: 2px solid #3d53c7;
-  border-radius: 50%;  /* 원형 디자인을 위한 설정 */
+  border-radius: 50%; /* 원형 디자인을 위한 설정 */
   display: inline-block;
   transition: background-color 0.3s;
 }
@@ -66,7 +66,7 @@
 }
 
 .TodoList-todoCheck:checked + .TodoList-checkSpan::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 45%;
   left: 50%;
@@ -105,10 +105,10 @@
   width: 75px;
   height: 30px;
   font-size: 0.9rem;
-  border-top: 1px solid #6174DB;
-  border-right: 1px solid #6174DB;
-  border-left: 1px solid #6174DB;
-  border-bottom: 0px solid #6174DB;
+  border-top: 1px solid #6174db;
+  border-right: 1px solid #6174db;
+  border-left: 1px solid #6174db;
+  border-bottom: 0px solid #6174db;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   background: #fff;
@@ -123,10 +123,10 @@
   width: 75px;
   height: 30px;
   font-size: 0.9rem;
-  border-top: 1px solid #6174DB;
-  border-right: 1px solid #6174DB;
-  border-left: 1px solid #6174DB;
-  border-bottom: 1px solid #6174DB;
+  border-top: 1px solid #6174db;
+  border-right: 1px solid #6174db;
+  border-left: 1px solid #6174db;
+  border-bottom: 1px solid #6174db;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   background: #fff;
@@ -135,12 +135,12 @@
 }
 
 .TodoList-moveDatail:hover {
-  background-color: #6174DB;
+  background-color: #6174db;
   color: #fff;
 }
 
 .TodoList-moveDatail2:hover {
-  background-color: #6174DB;
+  background-color: #6174db;
   color: #fff;
 }
 
@@ -182,15 +182,15 @@
   text-align: center;
   border-radius: 8px;
   background-color: #fff;
-  border: 1px solid #7586E1;
+  border: 1px solid #7586e1;
   color: #777;
   margin: 0 5px;
   cursor: pointer;
 }
 
 .TodoList-now {
-  background-color: #7586E1;
-  border: 1px solid #7586E1;
+  background-color: #7586e1;
+  border: 1px solid #7586e1;
   color: #fff;
   margin: 0 5px;
 }

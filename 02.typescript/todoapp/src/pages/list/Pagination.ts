@@ -22,28 +22,31 @@ const Pagination = function (
     pageBtn.appendChild(pageNum);
     pageBtns.appendChild(pageBtn);
 
-    pageBtn.addEventListener('click', async (e) => {
-      const currentTarget = e.currentTarget as HTMLElement;
-      const currntId = Number(currentTarget.id.split('_')[1]);
-      const currntTag = currentTarget;
-
-      document.querySelectorAll('.TodoList-pageBtn').forEach((item) => {
-        item.classList.remove('TodoList-now');
-      });
-      currntTag.classList.add('TodoList-now');
-
-      // 기존 content 제거
-      content.innerHTML = '';
-
-      // 페이지에 따른 content 추가
-      const newContent = await Content(currntId, limitNum);
-      content.appendChild(newContent.ul);
-
-      // 도메인에 쿼리스트링 적용 및 history
-      const queryString = `?page=${currntId}&limit=${limitNum}`;
-      history.pushState({}, 'todo', queryString);
-    });
+    pageBtn.addEventListener('click', (e) => pagenationEvent(e));
   }
+
+  async function pagenationEvent(e: MouseEvent) {
+    const currentTarget = e.currentTarget as HTMLElement;
+    const currntId = Number(currentTarget.id.split('_')[1]);
+    const currntTag = currentTarget;
+
+    document.querySelectorAll('.TodoList-pageBtn').forEach((item) => {
+      item.classList.remove('TodoList-now');
+    });
+    currntTag.classList.add('TodoList-now');
+
+    // 기존 content 제거
+    content.innerHTML = '';
+
+    // 페이지에 따른 content 추가
+    const newContent = await Content(currntId, limitNum);
+    content.appendChild(newContent.ul);
+
+    // 도메인에 쿼리스트링 적용 및 history
+    const queryString = `?page=${currntId}&limit=${limitNum}`;
+    history.pushState({}, 'todo', queryString);
+  }
+
   return pageBtns;
 };
 

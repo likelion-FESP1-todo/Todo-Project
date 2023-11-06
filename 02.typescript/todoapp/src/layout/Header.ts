@@ -1,4 +1,4 @@
-const Header = function(title){
+const Header = function (title: string) {
   const headerNode = document.createElement('header');
   const h1 = document.createElement('h1');
   const headerTitle = document.createTextNode(title);

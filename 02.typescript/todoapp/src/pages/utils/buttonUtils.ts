@@ -1,4 +1,4 @@
-import { linkTo } from '../Router';
+import { linkTo } from '../../Router';
 import axios from 'axios';
 
 const Button = function (svg: string, alt: string, btnEvent: () => void) {

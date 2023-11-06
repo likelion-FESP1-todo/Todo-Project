@@ -4,8 +4,8 @@ import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
 import axios from 'axios';
 import { linkTo } from '../../Router';
-import { Button, SendButton, BackEvent } from '../buttonUtils';
-import { Input, IsValidateInput, Textarea } from '../registUpdateUtils';
+import { Button, SendButton, BackEvent } from '../utils/buttonUtils';
+import { Input, IsValidateInput, Textarea } from '../utils/registUpdateUtils';
 
 const TodoRegist = function () {
   const page = document.createElement('div');
