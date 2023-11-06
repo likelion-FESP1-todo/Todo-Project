@@ -1,4 +1,5 @@
 // 할일 등록
+import './TodoInfo.css';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
 import { linkTo } from '../../Router';

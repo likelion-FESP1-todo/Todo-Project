@@ -1,4 +1,5 @@
 // 할일 목록
+import './TodoList.css';
 import Footer from '../../layout/Footer';
 import Pagination from './Pagination';
 import Content from './Content';
@@ -38,7 +39,7 @@ const TodoList = async function () {
 
   // 등록 버튼
   const btnRegist = document.createElement('button');
-  btnRegist.innerHTML = '&#43';
+  btnRegist.textContent = '+';
   btnRegist.setAttribute('class', 'TodoList-writeBtn');
   btnRegist.addEventListener('click', () => {
     linkTo('regist');

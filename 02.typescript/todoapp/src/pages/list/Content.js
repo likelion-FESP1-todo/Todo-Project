@@ -17,7 +17,7 @@ async function fetchData(pageNum, limitNum) {
 function createDotMenu() {
   const dotMenu = document.createElement('div');
   dotMenu.setAttribute('class', 'TodoList-dotMenu');
-  dotMenu.innerText = '⋮';
+  dotMenu.textContent = '⋮';
 
   let timeoutId;
 
@@ -55,7 +55,7 @@ function createMenuDiv(item, pageNum, limitNum) {
   menuDiv.setAttribute('class', 'TodoList-todoMenu');
 
   const todoInfoLink = document.createElement('a');
-  todoInfoLink.innerText = '상세조회';
+  todoInfoLink.textContent = '상세조회';
   todoInfoLink.setAttribute('class', 'TodoList-moveDatail');
   todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
   todoInfoLink.addEventListener('click', (e) => {
@@ -74,7 +74,7 @@ function createMenuDiv(item, pageNum, limitNum) {
 // 삭제 버튼 생성 함수
 function createDeleteButton(item, pageNum, limitNum) {
   const todoDelete = document.createElement('button');
-  todoDelete.innerText = '삭제';
+  todoDelete.textContent = '삭제';
   todoDelete.setAttribute('type', 'button');
   todoDelete.setAttribute('class', 'TodoList-moveDatail2');
   todoDelete.addEventListener('click', async (e) => {
@@ -92,6 +92,7 @@ function createDeleteButton(item, pageNum, limitNum) {
           );
           const data = response.data;
 
+          // tasks 수 수정
           const AllTasks = Number(
             document.querySelector('.TodoList-taskNum').innerText.split(' ')[0],
           );
