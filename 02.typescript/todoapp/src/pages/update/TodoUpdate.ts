@@ -2,6 +2,7 @@
 import '../TodoForm.css';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
+import axios from 'axios';
 import { linkTo } from '../../Router';
 import { Button, SendButton, BackEvent } from '../buttonUtils';
 import { Input, IsValidateInput, Textarea } from '../registUpdateUtils';
@@ -20,7 +21,7 @@ const TodoUpdate = async function () {
   const _id = searchParam('_id');
 
   //쿼리스트링 값 가져오기
-  function searchParam(key) {
+  function searchParam(key: string) {
     return new URLSearchParams(location.search).get(key);
   }
 
@@ -28,17 +29,17 @@ const TodoUpdate = async function () {
   try {
     response = await axios(`http://localhost:33088/api/todolist/${_id}`);
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
-  const data = response.data.item;
+  const data = response?.data.item;
 
   const title = Input(data.title);
   const content = Textarea(data.content);
 
   const editBtn = SendButton('수정하기', editEvent);
   async function editEvent() {
-    const titleVal = title.querySelector('input').value;
-    const contentVal = content.querySelector('textarea').value;
+    const titleVal = title.querySelector('input')?.value || '';
+    const contentVal = content.querySelector('textarea')?.value || '';
     if (!IsValidateInput(titleVal, contentVal)) {
       return;
     }

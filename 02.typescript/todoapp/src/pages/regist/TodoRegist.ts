@@ -2,6 +2,7 @@
 import '../TodoForm.css';
 import Header from '../../layout/Header';
 import Footer from '../../layout/Footer';
+import axios from 'axios';
 import { linkTo } from '../../Router';
 import { Button, SendButton, BackEvent } from '../buttonUtils';
 import { Input, IsValidateInput, Textarea } from '../registUpdateUtils';
@@ -21,8 +22,8 @@ const TodoRegist = function () {
 
   const registBtn = SendButton('등록하기', registEvent);
   async function registEvent() {
-    const titleVal = title.querySelector('input').value;
-    const contentVal = content.querySelector('textarea').value;
+    const titleVal = title.querySelector('input')?.value || '';
+    const contentVal = content.querySelector('textarea')?.value || '';
     if (!IsValidateInput(titleVal, contentVal)) {
       return;
     }

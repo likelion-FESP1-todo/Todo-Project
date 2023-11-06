@@ -1,6 +1,7 @@
 import { linkTo } from '../Router';
+import axios from 'axios';
 
-const Button = function (svg, alt, btnEvent) {
+const Button = function (svg: string, alt: string, btnEvent: () => void) {
   const btn = document.createElement('button');
   const btnIcon = document.createElement('img');
   btnIcon.src = `/img/${svg}.svg`;
@@ -10,7 +11,7 @@ const Button = function (svg, alt, btnEvent) {
   return btn;
 };
 
-const SendButton = function (text, event) {
+const SendButton = function (text: string, event: () => Promise<void>) {
   const btn = document.createElement('button');
   const btnText = document.createTextNode(text);
   btn.setAttribute('type', 'button');
@@ -24,7 +25,7 @@ const BackEvent = function () {
   window.history.back();
 };
 
-const DeleteEvent = async function (_id) {
+const DeleteEvent = async function (_id: string) {
   if (window.confirm('정말 삭제하시겠습니까?')) {
     try {
       await axios.delete(`http://localhost:33088/api/todolist/${_id}`);

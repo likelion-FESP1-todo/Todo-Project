@@ -9,10 +9,9 @@ const Input = function (title = '') {
   return inputDiv;
 };
 
-const IsValidateInput = function (titleVal, contentVal) {
+const IsValidateInput = function (titleVal: string, contentVal: string) {
   if (titleVal.length >= 50) {
     alert('50자 미만으로 입력해주세요.');
-    titleVal = titleInput.value.substring(0, 50);
     return false;
   }
   if (!titleVal || !contentVal) {
