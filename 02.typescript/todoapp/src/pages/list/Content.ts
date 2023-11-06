@@ -1,9 +1,10 @@
 import { linkTo } from '../../Router';
+import axios from 'axios';
 
 // 데이터를 가져오는 함수
-async function fetchData(pageNum, limitNum) {
+async function fetchData(pageNum: number, limitNum: number) {
   try {
-    const response = await axios(
+    const response = await axios<TodoListResponse>(
       `http://localhost:33088/api/todolist?page=${pageNum}&limit=${limitNum}`,
     );
     return response;
@@ -19,12 +20,13 @@ function createDotMenu() {
   dotMenu.setAttribute('class', 'TodoList-dotMenu');
   dotMenu.textContent = '⋮';
 
-  let timeoutId;
+  let timeoutId: number;
 
   dotMenu.addEventListener('click', (e) => {
     e.stopPropagation(); // 이벤트 버블링을 중지시킴
-    const todoMenuStyle =
-      e.target.parentNode.querySelector('.TodoList-todoMenu');
+    const target = e.target as HTMLElement;
+    const todoMenu = target.parentNode!.querySelector('.TodoList-todoMenu');
+    const todoMenuStyle = todoMenu as HTMLElement;
     todoMenuStyle.style.display = 'flex';
 
     if (timeoutId) clearTimeout(timeoutId);
@@ -36,11 +38,14 @@ function createDotMenu() {
   });
 
   document.addEventListener('click', (e) => {
-    const todoMenuStyles = document.querySelectorAll('.TodoList-todoMenu');
+    const target = e.target as HTMLElement;
+    const todoMenu = document.querySelectorAll('.TodoList-todoMenu');
+    const todoMenuStyles = todoMenu as NodeListOf<Element>;
 
-    todoMenuStyles.forEach((todoMenuStyle) => {
+    todoMenuStyles.forEach((todoMenu) => {
+      const todoMenuStyle = todoMenu as HTMLElement;
       // 클릭된 대상이 dotMenu나 TodoList-todoMenu가 아니라면
-      if (!dotMenu.contains(e.target) && !todoMenuStyle.contains(e.target)) {
+      if (!dotMenu.contains(target) && !todoMenuStyle.contains(target)) {
         todoMenuStyle.style.display = 'none';
       }
     });
@@ -50,7 +55,7 @@ function createDotMenu() {
 }
 
 // Menu Div 생성 함수
-function createMenuDiv(item, pageNum, limitNum) {
+function createMenuDiv(item: TodoItem, pageNum: number, limitNum: number) {
   const menuDiv = document.createElement('div');
   menuDiv.setAttribute('class', 'TodoList-todoMenu');
 
@@ -60,7 +65,7 @@ function createMenuDiv(item, pageNum, limitNum) {
   todoInfoLink.setAttribute('href', `info?_id=${item._id}`);
   todoInfoLink.addEventListener('click', (e) => {
     e.preventDefault();
-    linkTo(todoInfoLink.getAttribute('href'));
+    linkTo(todoInfoLink.getAttribute('href')!);
   });
 
   const todoDelete = createDeleteButton(item, pageNum, limitNum);
@@ -72,39 +77,38 @@ function createMenuDiv(item, pageNum, limitNum) {
 }
 
 // 삭제 버튼 생성 함수
-function createDeleteButton(item, pageNum, limitNum) {
+function createDeleteButton(item: TodoItem, pageNum: number, limitNum: number) {
   const todoDelete = document.createElement('button');
   todoDelete.textContent = '삭제';
   todoDelete.setAttribute('type', 'button');
   todoDelete.setAttribute('class', 'TodoList-moveDatail2');
   todoDelete.addEventListener('click', async (e) => {
     const id = item._id;
-    const li_tag = e.target.parentNode.parentNode;
-    const ul_tag = li_tag.parentNode;
+    const target = e.target as HTMLElement;
+    const li = target.parentNode!.parentNode;
+    const li_tag = li as HTMLElement;
+    const ul = li_tag.parentNode;
+    const ul_tag = ul as HTMLElement;
 
     if (li_tag) {
       if (window.confirm('정말 삭제하시겠습니까?')) {
         // url: /todolist/{_id}
         // method: DELETE
         try {
-          const response = await axios.delete(
-            `http://localhost:33088/api/todolist/${id}`,
-          );
-          const data = response.data;
+          await axios.delete(`http://localhost:33088/api/todolist/${id}`);
 
           // tasks 수 수정
-          const AllTasks = Number(
-            document.querySelector('.TodoList-taskNum').innerText.split(' ')[0],
-          );
-          document.querySelector('.TodoList-taskNum').innerText = `${
-            AllTasks - 1
-          } tasks`;
+          const taskNum = document.querySelector(
+            '.TodoList-taskNum',
+          ) as HTMLElement;
+          const AllTasks = Number(taskNum?.innerText.split(' ')[0]);
+          taskNum.innerText = `${AllTasks - 1} tasks`;
 
           // 할 일이 1개이고 삭제할 경우
           if (ul_tag.children.length === 1 && ul_tag.children[0] === li_tag) {
             if (Number(pageNum) !== 1) {
-              document.getElementById(`id_${pageNum}`).remove();
-              document.getElementById(`id_${Number(pageNum) - 1}`).click();
+              document.getElementById(`id_${pageNum}`)!.remove();
+              document.getElementById(`id_${Number(pageNum) - 1}`)!.click();
             }
           }
           // 중간 할 일을 지울 때, 마지막 페이지의 값이 없으면 페이지 지우기
@@ -112,9 +116,9 @@ function createDeleteButton(item, pageNum, limitNum) {
             if ((AllTasks - 1) % Number(limitNum) === 0 && AllTasks > 5) {
               const totalPageNum =
                 document.querySelectorAll('.TodoList-pageBtn').length;
-              document.getElementById(`id_${totalPageNum}`).remove();
+              document.getElementById(`id_${totalPageNum}`)!.remove();
             }
-            document.getElementById(`id_${Number(pageNum)}`).click();
+            document.getElementById(`id_${Number(pageNum)}`)!.click();
           }
 
           ul_tag.removeChild(li_tag);
@@ -130,7 +134,7 @@ function createDeleteButton(item, pageNum, limitNum) {
 }
 
 // 타이틀 생성 함수
-function createTitleTag(title) {
+function createTitleTag(title: string) {
   const titleTag = document.createElement('span');
   titleTag.setAttribute('class', 'TodoList-Title');
   titleTag.innerText = title;
@@ -142,7 +146,7 @@ function createTitleTag(title) {
 }
 
 // 체크박스 생성 함수
-function createCheckLabel(item, titleTag) {
+function createCheckLabel(item: TodoItem, titleTag: HTMLSpanElement) {
   const checkLabel = document.createElement('label');
   checkLabel.setAttribute('class', 'TodoList-checkLabel');
 
@@ -153,7 +157,8 @@ function createCheckLabel(item, titleTag) {
   completeCheck.setAttribute('type', 'checkbox');
   completeCheck.setAttribute('class', 'TodoList-todoCheck');
   completeCheck.addEventListener('click', async function (e) {
-    titleTag.style.textDecoration = e.target.checked ? 'line-through' : 'unset';
+    const target = e.target as HTMLInputElement;
+    titleTag.style.textDecoration = target.checked ? 'line-through' : 'unset';
 
     // check 후 서버 통신으로 done을 바꾸기
     // url: /todolist/{_id}
@@ -162,13 +167,12 @@ function createCheckLabel(item, titleTag) {
       const body = {
         title: item.title,
         content: item.content,
-        done: e.target.checked,
+        done: target.checked,
       };
-      const response = await axios.patch(
+      await axios.patch(
         `http://localhost:33088/api/todolist/${item._id}`,
         body,
       );
-      const data = response.data;
     } catch (err) {
       alert('수정 실패');
       console.error(err);
@@ -187,7 +191,7 @@ function createCheckLabel(item, titleTag) {
 }
 
 // UI를 업데이트하는 함수
-function renderUI(items, pageNum, limitNum) {
+function renderUI(items: TodoItem[], pageNum: number, limitNum: number) {
   const ul = document.createElement('ul');
   ul.setAttribute('class', 'todoUl');
 
@@ -216,9 +220,9 @@ function renderUI(items, pageNum, limitNum) {
   return ul;
 }
 
-const Content = async (pageNum, limitNum) => {
+const Content = async (pageNum: number, limitNum: number) => {
   const response = await fetchData(pageNum, limitNum);
-  const ul = renderUI(response.data?.items, pageNum, limitNum);
+  const ul = renderUI(response!.data?.items, pageNum, limitNum);
   return { ul, response };
 };
 

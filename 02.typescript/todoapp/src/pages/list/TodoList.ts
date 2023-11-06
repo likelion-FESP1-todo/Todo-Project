@@ -21,14 +21,15 @@ const TodoList = async function () {
   content.setAttribute('class', 'TodoList-content');
   page.appendChild(content);
 
-  const pageNum = searchParam('page') || 1; // 페이지 번호 초기값 설정
-  const limitNum = searchParam('limit') || 5; // 목록 개수 초기값 설정
+  const pageNum = Number(searchParam('page')) || 1; // 페이지 번호 초기값 설정
+  const limitNum = Number(searchParam('limit')) || 5; // 목록 개수 초기값 설정
   const newContent = await Content(pageNum, limitNum); // 페이지 번호 및 목록 개수로 목록 가져오기
-  const totalPages = newContent.response.data.pagination.totalPages; // 전체 페이지 수
-  const totalNum = newContent.response.data.pagination.total; // 전체 목록 수
+  const totalPages = newContent.response!.data.pagination.totalPages; // 전체 페이지 수
+  const totalNum = newContent.response!.data.pagination.total; // 전체 목록 수
   content.appendChild(newContent.ul);
 
   // 페이지네이션 (totalPage, limitNum, page태그)
+
   page.appendChild(Pagination(totalPages || 1, limitNum, pageNum, content));
 
   // 총 Task 수
@@ -53,7 +54,7 @@ const TodoList = async function () {
 };
 
 // 쿼리스트링 값 가져오기
-function searchParam(key) {
+function searchParam(key: string) {
   return new URLSearchParams(location.search).get(key);
 }
 
@@ -69,7 +70,7 @@ function getToday() {
   return year + '년 ' + month + '월 ' + day + '일' + ` (${day_week})`;
 }
 
-const day_week_text = {
+const day_week_text: { [key: number]: string } = {
   0: '일',
   1: '월',
   2: '화',

@@ -1,6 +1,11 @@
 import Content from './Content';
 
-const Pagination = function (totalPages, limitNum, nowPage, content) {
+const Pagination = function (
+  totalPages: number,
+  limitNum: number,
+  nowPage: number,
+  content: HTMLDivElement,
+) {
   const pageBtns = document.createElement('ul');
   pageBtns.setAttribute('class', 'TodoList-pageBox');
   for (let i = 0; i < totalPages; i++) {
@@ -13,20 +18,18 @@ const Pagination = function (totalPages, limitNum, nowPage, content) {
       pageBtn.setAttribute('class', 'TodoList-pageBtn');
     }
 
-    const pageNum = document.createTextNode(i + 1);
+    const pageNum = document.createTextNode((i + 1).toString());
     pageBtn.appendChild(pageNum);
     pageBtns.appendChild(pageBtn);
 
     pageBtn.addEventListener('click', async (e) => {
-      const currntId = e.currentTarget.id.split('_')[1];
-      const currntTag = e.currentTarget;
+      const currentTarget = e.currentTarget as HTMLElement;
+      const currntId = Number(currentTarget.id.split('_')[1]);
+      const currntTag = currentTarget;
 
-      Array.from(document.querySelector('.TodoList-pageBox').children).forEach(
-        (item) => {
-          item.classList.remove('TodoList-now');
-        },
-      );
-
+      document.querySelectorAll('.TodoList-pageBtn').forEach((item) => {
+        item.classList.remove('TodoList-now');
+      });
       currntTag.classList.add('TodoList-now');
 
       // 기존 content 제거
