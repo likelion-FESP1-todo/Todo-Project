@@ -74,10 +74,8 @@ npx serve -s .
 📍**TypeScript**
 
 ```
-cd 02.typescript
+cd 02.typescript/todoapp
 npm install
-
-cd todoapp
 npm run dev
 ```
 
