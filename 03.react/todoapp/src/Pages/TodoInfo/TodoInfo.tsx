@@ -5,8 +5,7 @@ import Header from '../../Layout/Header';
 
 const TodoInfo = function () {
   return (
-    <div id="page">
-      <Header title="할일 상세 페이지" />
+    <div id='page'>
       <Footer />
     </div>
   );
