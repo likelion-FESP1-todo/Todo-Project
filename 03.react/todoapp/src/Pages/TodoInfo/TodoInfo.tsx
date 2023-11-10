@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styles from './TodoInfo.module.css';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../../Layout/Footer';
 import Header from '../../Layout/Header';
 import InfoButtons from '../../Components/TodoInfo/InfoButtons';

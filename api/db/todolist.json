@@ -4,9 +4,9 @@
       "_id": 1,
       "title": "Javascript 공부",
       "content": "열심히 하자",
-      "done": true,
+      "done": false,
       "createdAt": "2023.10.18 10:12:45",
-      "updatedAt": "2023.10.30 18:34:17"
+      "updatedAt": "2023.11.10 14:42:53"
     },
     {
       "_id": 2,
