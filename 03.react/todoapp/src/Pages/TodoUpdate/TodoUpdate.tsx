@@ -13,7 +13,7 @@ import SendButton from 'Components/TodoRegistAndUpdate/SendButton';
 const TodoUpdate = function () {
   const navigate = useNavigate();
   const _id = useLocation().search.split('=')[1];
-  const [todoItem, setTodoItem] = useState<TodoItem | undefined>(undefined);
+  const [todoItem, setTodoItem] = useState<TodoItem | ''>('');
   const [title, setTitle] = useState(todoItem && todoItem.title);
   const [content, setContent] = useState(todoItem && todoItem.content);
 
@@ -42,13 +42,15 @@ const TodoUpdate = function () {
 
   const backEvent = useBackEvent();
   const editEvent = async () => {
-    try {
-      const body = { title: title, content: content, done: todoItem!.done };
-      await axios.patch(`http://localhost:33088/api/todolist/${_id}`, body);
-      navigate('/');
-    } catch (error) {
-      console.log('Error 🥲');
-      console.error(error);
+    if (todoItem) {
+      try {
+        const body = { title: title, content: content, done: todoItem.done };
+        await axios.patch(`http://localhost:33088/api/todolist/${_id}`, body);
+        navigate('/');
+      } catch (error) {
+        console.log('Error 🥲');
+        console.error(error);
+      }
     }
   };
 

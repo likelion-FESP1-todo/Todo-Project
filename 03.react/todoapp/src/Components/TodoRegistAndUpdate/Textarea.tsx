@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 
 interface TextareaProps {
-  content: string | undefined;
+  content: string;
   onChange: (value: string) => void;
   className: string;
 }
