@@ -3,9 +3,10 @@ import React, { ChangeEvent } from 'react';
 interface InputProps {
   title: string;
   onChange: (value: string) => void;
+  className: string;
 }
 
-const Input = ({ title = '', onChange }: InputProps) => {
+const Input = ({ title, onChange, className }: InputProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
@@ -17,7 +18,7 @@ const Input = ({ title = '', onChange }: InputProps) => {
         placeholder="제목을 입력해주세요."
         value={title}
         onChange={handleChange}
-        className="Todo-titleInput"
+        className={className}
       />
     </h2>
   );

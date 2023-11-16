@@ -55,14 +55,17 @@ const TodoRegist = function () {
         <Input
           title={title}
           onChange={onClickTitleChange}
+          className={styles['Todo-titleInput']}
         />
         <Textarea
-          content={title}
+          content={content}
           onChange={onClickContentChange}
+          className={styles['Todo-contentInput']}
         />
         <SendButton
           text={'등록하기'}
           event={registEvent}
+          className={styles['Todo-button']}
         />
       </section>
       <Footer />

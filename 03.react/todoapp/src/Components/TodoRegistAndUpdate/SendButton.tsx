@@ -1,12 +1,13 @@
 interface SendButtonProps {
   text: string;
   event: () => Promise<void>;
+  className: string;
 }
-const SendButton = function ({ text, event }: SendButtonProps) {
+const SendButton = function ({ text, event, className }: SendButtonProps) {
   return (
     <button
       type="button"
-      className="Todo-button"
+      className={className}
       onClick={event}
     >
       {text}
