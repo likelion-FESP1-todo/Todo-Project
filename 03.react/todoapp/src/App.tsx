@@ -7,28 +7,26 @@ import TodoUpdate from './Pages/TodoUpdate/TodoUpdate';
 
 function App() {
   return (
-    <div id="app">
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={<TodoInfo />}
-          />
-          <Route
-            path="/list"
-            element={<TodoList />}
-          />
-          <Route
-            path="/regist"
-            element={<TodoRegist />}
-          />
-          <Route
-            path="/update"
-            element={<TodoUpdate />}
-          />
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={<TodoList />}
+        />
+        <Route
+          path="/info"
+          element={<TodoInfo />}
+        />
+        <Route
+          path="/regist"
+          element={<TodoRegist />}
+        />
+        <Route
+          path="/update"
+          element={<TodoUpdate />}
+        />
+      </Routes>
+    </Router>
   );
 }
 

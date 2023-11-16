@@ -6,10 +6,6 @@ import Header from '../../Layout/Header';
 const TodoRegist = function () {
   return (
     <div id="page">
-      <Header
-        title="할일 등록 페이지"
-        className="Todo-header TodoInfo-header"
-      />
       <Footer />
     </div>
   );
