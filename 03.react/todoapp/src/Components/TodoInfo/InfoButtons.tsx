@@ -1,37 +1,40 @@
 import React from 'react';
+import Button from '../Utils/Button';
+import { useDeleteEvent, useBackEvent } from 'Components/Utils/utilsFunction';
+import { useNavigate } from 'react-router-dom';
 
-const InfoButtons = function () {
-  // function editEvent() {
-  //   const queryString = `?_id=${data._id}`;
-  //   history.pushState({}, 'update', queryString);
-  //   linkTo(`update${queryString}`);
-  // }
+const InfoButtons = function ({ id }: { id: number }) {
+  const navigate = useNavigate();
+  const deleteEvent = useDeleteEvent();
+  const backEvent = useBackEvent();
+  const editEvent = function () {
+    navigate({
+      pathname: '/update',
+      search: `?_id=${id}`,
+    });
+  };
 
   return (
     <>
       <div className="TodoInfo-btnGroup">
-        {/* <Button
-        find="editButton"
-        text="수정하기"
-        event={editEvent}
-      />
+        <Button
+          svg="editButton"
+          alt="수정하기"
+          btnEvent={editEvent}
+        />
 
-      <Button
-        find="deleteButton"
-        text="삭제하기"
-        event={() => _id && DeleteEvent(_id)}
-      />
-
+        <Button
+          svg="deleteButton"
+          alt="삭제하기"
+          btnEvent={() => id && deleteEvent(id)}
+        />
+      </div>
       <Button
         className="backButton"
-        find="backButton"
-        text="뒤로가기"
-        event={BackEvent}
-      /> */}
-        <button>수정하기</button>
-        <button>삭제하기</button>
-      </div>
-      <button className="backButton">뒤로가기</button>
+        svg="backButton"
+        alt="뒤로가기"
+        btnEvent={backEvent}
+      />
     </>
   );
 };
