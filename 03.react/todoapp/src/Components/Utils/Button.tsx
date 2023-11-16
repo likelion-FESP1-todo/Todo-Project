@@ -5,7 +5,7 @@ import backButtonImg from '../../Assets/img/backButton.svg';
 interface ButtonProps {
   svg: string;
   alt: string;
-  btnEvent?: () => void;
+  btnEvent: () => void;
   className?: string;
 }
 
