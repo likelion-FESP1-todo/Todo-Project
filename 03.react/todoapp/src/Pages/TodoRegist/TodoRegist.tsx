@@ -5,7 +5,7 @@ import Header from '../../Layout/Header';
 
 const TodoRegist = function () {
   return (
-    <div id='page'>
+    <div id="page">
       <Footer />
     </div>
   );

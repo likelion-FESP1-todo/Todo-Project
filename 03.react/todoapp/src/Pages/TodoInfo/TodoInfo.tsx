@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import styles from './TodoInfo.module.css';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
 import Footer from '../../Layout/Footer';
 import Header from '../../Layout/Header';
 import InfoButtons from '../../Components/TodoInfo/InfoButtons';
 import InfoDate from '../../Components/TodoInfo/InfoDate';
 import CheckBox from '../../Components/TodoInfo/CheckBox';
 import Error404 from '../../Components/Utils/Error';
+import styles from './TodoInfo.module.css';
+import axios from 'axios';
 
 const TodoInfo = function () {
   const [data, setData] = useState<TodoItem | null>(null);
@@ -20,9 +20,7 @@ const TodoInfo = function () {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:33088/api/todolist/${_id}`
-        );
+        const response = await axios.get(`http://localhost:33088/api/todolist/${_id}`);
         setData(response.data.item);
       } catch (error) {
         console.log(error);
@@ -35,9 +33,9 @@ const TodoInfo = function () {
     <div id="page">
       <Header
         title="할일 상세 내용"
-        className={`${styles['Todo-header']} ${styles['TodoInfo-header']}`}
+        className={`${styles['TodoInfo-header']}`}
       >
-        <InfoButtons />
+        <InfoButtons id={_id} />
       </Header>
       {data ? (
         <section>

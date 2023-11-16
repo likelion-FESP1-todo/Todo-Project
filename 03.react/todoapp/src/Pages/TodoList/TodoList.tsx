@@ -18,9 +18,7 @@ const TodoList = function () {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:33088/api/todolist?page=1&limit=5'
-      );
+      const response = await axios.get('http://localhost:33088/api/todolist?page=1&limit=5');
       setTodos(response.data.items);
     } catch (error) {
       console.error('Error 🥲');
@@ -40,10 +38,16 @@ const TodoList = function () {
   };
 
   return (
-    <div id='page'>
-      <Header className={styles['TodoList-Header']} title={GetToday()} />
+    <div id="page">
+      <Header
+        className={styles['TodoList-Header']}
+        title={GetToday()}
+      />
       <p className={styles['TodoList-taskNum']}>{`${todos.length} tasks`}</p>
-      <section id='content' className={styles['TodoList-content']}>
+      <section
+        id="content"
+        className={styles['TodoList-content']}
+      >
         <ul>
           {todos.map((item) => (
             <Todo
@@ -56,7 +60,7 @@ const TodoList = function () {
         </ul>
       </section>
       <button className={styles['TodoList-writeBtn']}>
-        <Link to='/regist'>+</Link>
+        <Link to="/regist">+</Link>
       </button>
       <Footer />
     </div>
