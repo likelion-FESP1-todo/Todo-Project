@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 
 interface TextareaProps {
-  content: string;
+  content: string | undefined;
   onChange: (value: string) => void;
   className: string;
 }
@@ -12,14 +12,12 @@ const Textarea = ({ content, onChange, className }: TextareaProps) => {
   };
 
   return (
-    <section>
-      <textarea
-        placeholder="내용을 적어주세요."
-        className={className}
-        onChange={handleChange}
-        value={content}
-      />
-    </section>
+    <textarea
+      placeholder="내용을 적어주세요."
+      className={className}
+      onChange={handleChange}
+      value={content}
+    />
   );
 };
 
