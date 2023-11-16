@@ -33,7 +33,7 @@ const TodoInfo = function () {
     <div id="page">
       <Header
         title="할일 상세 내용"
-        className={`${styles['Todo-header']} ${styles['TodoInfo-header']}`}
+        className={`${styles['TodoInfo-header']}`}
       >
         <InfoButtons id={_id} />
       </Header>
