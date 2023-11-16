@@ -23,7 +23,8 @@ const TodoInfo = function () {
         const response = await axios.get(`http://localhost:33088/api/todolist/${_id}`);
         setData(response.data.item);
       } catch (error) {
-        console.log(error);
+        console.log('Error 🥲');
+        console.error(error);
       }
     };
     fetchData();

@@ -21,11 +21,11 @@ const TodoUpdate = function () {
     async function loadData() {
       try {
         const response = await axios(`http://localhost:33088/api/todolist/${_id}`);
-        console.log(response);
         setTodoItem(response.data);
         setTitle(response.data.item.title);
         setContent(response.data.item.content);
       } catch (error) {
+        console.log('Error 🥲');
         console.error(error);
       }
     }
@@ -46,8 +46,9 @@ const TodoUpdate = function () {
       const body = { title: title, content: content, done: todoItem!.done };
       await axios.patch(`http://localhost:33088/api/todolist/${_id}`, body);
       navigate('/');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.log('Error 🥲');
+      console.error(error);
     }
   };
 

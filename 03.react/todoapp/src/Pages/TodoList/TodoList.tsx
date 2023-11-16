@@ -34,6 +34,7 @@ const TodoList = function () {
       setTodos((prev) => prev.filter((todo) => todo._id !== id));
     } catch (error) {
       console.log('Error 🥲');
+      console.error(error);
     }
   };
 

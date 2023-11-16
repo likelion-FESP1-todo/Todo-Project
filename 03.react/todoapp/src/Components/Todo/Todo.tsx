@@ -30,7 +30,6 @@ export default function Todo({ todo, onDelete, fetchData }: TodoProps) {
   };
 
   const onCheck = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('checked', e.target.checked);
     try {
       // 서버에 체크박스 상태 업데이트 요청 보내기
       await axios.patch(`http://localhost:33088/api/todolist/${_id}`, {
@@ -47,7 +46,7 @@ export default function Todo({ todo, onDelete, fetchData }: TodoProps) {
       <label className={styles['TodoList-checkLabel']}>
         <input
           className={styles['TodoList-todoCheck']}
-          type='checkbox'
+          type="checkbox"
           checked={todo.done}
           onChange={onCheck}
           id={_id}
@@ -63,7 +62,10 @@ export default function Todo({ todo, onDelete, fetchData }: TodoProps) {
       >
         {title}
       </span>
-      <div className={styles['TodoList-dotMenu']} onClick={moveDetail}>
+      <div
+        className={styles['TodoList-dotMenu']}
+        onClick={moveDetail}
+      >
         ⋮
       </div>
       {menuVisible && (
@@ -75,7 +77,7 @@ export default function Todo({ todo, onDelete, fetchData }: TodoProps) {
             상세조회
           </Link>
           <button
-            type='button'
+            type="button"
             className={styles['TodoList-moveDatail2']}
             onClick={handleDelete}
           >
