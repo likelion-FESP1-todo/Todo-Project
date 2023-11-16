@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 // 게시물 삭제
-export const useDeleteEvent = function () {
+const useDeleteEvent = function () {
   const navigate = useNavigate();
 
   return async function (id: number) {
@@ -20,7 +20,7 @@ export const useDeleteEvent = function () {
 };
 
 // 뒤로가기
-export const useBackEvent = function () {
+const useBackEvent = function () {
   const navigate = useNavigate();
 
   return function () {
@@ -28,15 +28,4 @@ export const useBackEvent = function () {
   };
 };
 
-// Input 유효성 검사
-export const IsValidateInput = function (titleVal: string, contentVal: string) {
-  if (titleVal.length >= 50) {
-    alert('50자 미만으로 입력해주세요.');
-    return false;
-  }
-  if (!titleVal || !contentVal) {
-    alert('제목과 상세내용을 모두 입력해주세요!');
-    return false;
-  }
-  return true;
-};
+export { useDeleteEvent, useBackEvent };

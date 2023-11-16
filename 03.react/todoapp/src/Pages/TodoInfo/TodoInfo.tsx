@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Footer from '../../Layout/Footer';
 import Header from '../../Layout/Header';
 import InfoButtons from '../../Components/TodoInfo/InfoButtons';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GetToday = () => {
+const getToday = () => {
   const today = new Date();
   const year = today.getFullYear();
   const month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -12,7 +12,7 @@ const GetToday = () => {
   return formattedDate;
 };
 
-const SearchParam = (key: string) => {
+const searchParam = (key: string) => {
   return new URLSearchParams(window.location.search).get(key);
 };
 
@@ -26,4 +26,4 @@ const dayOfWeekText: { [key: number]: string } = {
   6: '토',
 };
 
-export { GetToday, SearchParam };
+export { getToday, searchParam };

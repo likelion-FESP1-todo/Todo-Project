@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../Utils/Button';
-import { useDeleteEvent, useBackEvent } from 'Components/Utils/utilsFunction';
+import { useDeleteEvent, useBackEvent } from 'Hook/useButtonEvent';
 import { useNavigate } from 'react-router-dom';
 
 const InfoButtons = function ({ id }: { id: number }) {

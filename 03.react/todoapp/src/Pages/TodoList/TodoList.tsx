@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../../Layout/Footer';
 import Header from '../../Layout/Header';
-import { GetToday } from '../../Utils/GetToday';
+import { getToday } from '../../Utils/getToday';
 import Todo from '../../Components/Todo/Todo';
 import styles from './TodoList.module.css';
 
@@ -42,7 +42,7 @@ const TodoList = function () {
     <div id="page">
       <Header
         className={styles['TodoList-Header']}
-        title={GetToday()}
+        title={getToday()}
       />
       <p className={styles['TodoList-taskNum']}>{`${todos.length} tasks`}</p>
       <section

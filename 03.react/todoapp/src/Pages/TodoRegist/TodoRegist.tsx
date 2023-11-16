@@ -6,10 +6,10 @@ import Button from 'Components/Utils/Button';
 import Input from 'Components/TodoRegistAndUpdate/Input';
 import Textarea from 'Components/TodoRegistAndUpdate/Textarea';
 import SendButton from 'Components/TodoRegistAndUpdate/SendButton';
-import { useBackEvent } from 'Components/Utils/utilsFunction';
 import styles from '../TodoRegistAndUpdate.module.css';
 import axios from 'axios';
-import { IsValidateInput } from 'Components/Utils/utilsFunction';
+import isInputValid from 'Utils/isInputValid';
+import { useBackEvent } from 'Hook/useButtonEvent';
 
 const TodoRegist = function () {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const TodoRegist = function () {
   const backEvent = useBackEvent();
 
   const registEvent = async () => {
-    if (!IsValidateInput(title, content)) {
+    if (!isInputValid(title, content)) {
       return;
     }
     try {
