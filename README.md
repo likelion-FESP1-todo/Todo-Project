@@ -52,7 +52,7 @@
 ### API 서버 구동
 
 ```
-cd api
+cd 00.API/api
 npm i
 npm start
 ```
@@ -83,3 +83,11 @@ npm run dev
   - 기본 포트는 5173으로 구동되고 해당 포트가 사용중일 경우 번호가 하나씩 증가
   - http://localhost:5173/
 - HMR (Hot Module Replacement) 지원됨
+
+📍**React**
+
+```
+cd 03.react/todoapp
+npm install
+npm start
+```

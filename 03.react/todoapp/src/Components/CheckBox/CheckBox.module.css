@@ -1,0 +1,37 @@
+.TodoList-checkLabel {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.TodoList-todoCheck {
+  display: none;
+}
+
+.TodoList-checkSpan {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-right: 22px;
+  border: 2px solid #3d53c7;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.TodoList-todoCheck:checked + .TodoList-checkSpan {
+  background-color: #3d53c7;
+}
+
+.TodoList-todoCheck:checked + .TodoList-checkSpan::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 4px 4px 0;
+  zoom: 1.1;
+}
