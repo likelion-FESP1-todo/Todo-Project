@@ -1,10 +1,59 @@
 # 멋쟁이 사자처럼 FESP 1기 6조 : 미니 프로젝트(TODO App)
 
-## 📌 JS 프로젝트
-
-| ![Team%20Leader](https://img.shields.io/badge/-Team%20leader-95DBF9)</br>**유재영** |               **우승미**                |                    **윤선영**                     |               **윤태현**                |
-| :---------------------------------------------------------------------------------: | :-------------------------------------: | :-----------------------------------------------: | :-------------------------------------: |
-|                          [zxxng](https://github.com/zxxng)                          | [wSeungMi](https://github.com/wSeungMi) | [seonyeongyoon](https://github.com/seonyeongyoon) | [yoonth95](https://github.com/yoonth95) |
+## 📌 프로젝트 팀원
+<table>
+<tr>
+	<td>
+		<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat"><br>
+		<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat"><br>
+		<img src="https://img.shields.io/badge/React-61DAFB?style=flat"><br>
+		유재영
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat"><br>
+		우승미
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat"><br>
+		윤선영
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat"><br>
+		윤태현
+	</td>
+	<td>
+	 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat"><br>
+	 송수빈
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat"><br>
+		신은수
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat"><br>
+		안중후
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/React-61DAFB?style=flat"><br>
+		서진만
+	</td>
+	<td>
+		<img src="https://img.shields.io/badge/React-61DAFB?style=flat"><br>
+		현지수
+	</td>
+</tr>
+<tr>
+	<td><a href="https://github.com/zxxng">zxxng</a></td>
+	<td><a href="https://github.com/wSeungMi">wSeungMi</a></td>
+	<td><a href="https://github.com/seonyeongyoon">yoon</a></td>
+	<td><a href="https://github.com/yoonth95">yoonth95</a></td>
+	<td><a href="https://github.com/ssb1565b">ssb1565b</a></td>
+	<td><a href="https://github.com/ShinEun9">ShinEun9</a></td>
+	<td><a href="https://github.com/hookor">hookor</a></td>
+	<td><a href="https://github.com/seojinman">seojinman</a></td>
+	<td><a href="https://github.com/hyunzsu">hyunzsu</a></td>
+</tr>
+</table>
 
 - 🔗 GitHub URL: https://github.com/todolist-refactoring-project/Todo-Project
 - 🎨 Figma: [Figma](https://www.figma.com/file/cBxAPfNJHH4W0s1ZoCFhmH/%5BFESP%5D-%ED%88%AC%EB%91%90%EB%A6%AC%EC%8A%A4%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_6%EC%A1%B0?type=design&node-id=0-1&mode=design&t=i6VcsLKAgantBfT5-0)
@@ -22,20 +71,6 @@
 - [x] TodoList 등록
 - [x] TodoList 수정
 - [x] TodoList 삭제
-
-### 🔍 주요 기능
-
-- 페이지네이션
-
-```
-// 추후 추가
-```
-
-- 중복되는 코드 함수화
-
-```
-// 추후 추가
-```
 
 ### ✨ UI
 
